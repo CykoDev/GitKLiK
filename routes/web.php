@@ -25,7 +25,12 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['verified']], function () {
+	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+});
+
+Route::get('/repo/{repo}', 'RepoViewController@index')->name('repo');
 
 Route::get('profile', function () {
 	
