@@ -40,6 +40,48 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="full_name" class="col-md-4 col-form-label text-md-right">{{ __('Full name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="full_name" type="text" class="form-control @error('full name') is-invalid @enderror" name="full_name" value="{{ old('full_name') }}" autocomplete="full name" autofocus>
+
+                                @error('full_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="headline" class="col-md-4 col-form-label text-md-right">{{ __('Headline') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="headline" type="text" class="form-control @error('headline') is-invalid @enderror" name="headline" value="{{ old('headline') }}" autocomplete="headline" autofocus>
+
+                                @error('headline')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="bio" class="col-md-4 col-form-label text-md-right">{{ __('Bio') }}</label>
+
+                            <div class="col-md-6">
+                                <textarea id="bio" class="form-control @error('bio') is-invalid @enderror" name="bio" value="{{ old('bio') }}" autocomplete="bio" autofocus></textarea>
+
+                                @error('bio')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
