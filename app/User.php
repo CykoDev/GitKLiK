@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasManyThrough('App\Commit', 'App\Repository');
     }
 
-    public function stars(){
+    public function starredRepos(){
 
         return $this->hasMany('App\Star');
     }
