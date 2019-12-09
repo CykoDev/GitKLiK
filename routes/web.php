@@ -23,6 +23,7 @@ Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
 
+
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
