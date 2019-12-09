@@ -17,7 +17,7 @@ class CreateRepositoriesTable extends Migration
             $table->bigIncrements('id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
             $table->string('name');
-            $table->string('description', 5000);
+            $table->string('description', 5000)->nullable();
             $table->timestamps();
         });
     }
