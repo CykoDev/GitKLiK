@@ -30,4 +30,3 @@ Route::group(['middleware' => 'verified'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
 });
-
