@@ -31,6 +31,7 @@ Route::group(['middleware' => 'verified'], function () {
 	Route::resource('tags','TagController');
 	Route::resource('repository','RepoController');
 	Route::resource('commit','CommitController', ['except' => ['edit']]);
+	Route::resource('stars','StarController', ['except' => ['show']]);
 
 	Route::resource('photo','PhotoController', ['except' => ['create']]);
 
