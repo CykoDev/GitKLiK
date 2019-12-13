@@ -16,7 +16,7 @@ class CreateRepositoriesTable extends Migration
         Schema::create('repositories', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
             $table->integer('user_id')->unsigned()->index();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('description', 5000)->nullable();
             $table->timestamps();
         });

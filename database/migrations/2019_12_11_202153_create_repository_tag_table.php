@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePhotosTable extends Migration
+class CreateRepositoryTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreatePhotosTable extends Migration
      */
     public function up()
     {
-        Schema::create('photos', function (Blueprint $table) {
+        Schema::create('repository_tag', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
-            $table->integer('imageable_id')->unsigned()->index()->nullable();
-            $table->string('imageable_type')->nullable();
-            $table->string('path')->unique();
-            $table->string('type')->nullable();
-            $table->softDeletes();
+            $table->integer('repository_id')->unsigned()->index();
+            $table->integer('tag_id')->unsigned()->index();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreatePhotosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('repository_tag');
     }
 }

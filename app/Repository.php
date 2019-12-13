@@ -39,4 +39,9 @@ class Repository extends Model
 
         return $this->morphMany('App\Photo', 'imageable');
     }
+
+    public function tags(){
+
+        return $this->belongsToMany('App\Tag');
+    }
 }
