@@ -30,3 +30,28 @@ Route::group(['middleware' => 'verified'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Test Routes
+|--------------------------------------------------------------------------
+*/
+
+
+Route::get('/test/bat', function(){
+
+
+	$output = explode(" ", shell_exec('git show --raw '));
+
+	$i = 0;
+	while($i<sizeof($output)){
+
+
+		$output[$i] = explode(" ", $output[$i]);
+
+		$i+=1;
+	}
+
+	return $output;
+});
