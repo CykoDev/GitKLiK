@@ -20,12 +20,6 @@ class RepoViewController extends Controller
             array_push($starUsers, $star->user);
         }
 
-        $data = [
-            'user' => $user,
-            'stars' => $starUsers,
-            'latestCommits' => [],
-        ];
-
         $absoluteRepoPath = storage_path().'\app\repos\\'.$repoName.'\\';
         $relativeRepoPath = 'repos\\'.$repoName;
         $pathSize = strlen($relativeRepoPath);
@@ -46,9 +40,16 @@ class RepoViewController extends Controller
             $files[$file] = Git::dir_getLatestCommit($file, $absoluteRepoPath);
         }
 
+        $data = [
+            'absPath' => $absoluteRepoPath,
+            'user' => $user,
+            'repo' => $repo,
+            'latestCommits' => [],
+        ];
+
         $data['latestCommits']['directories'] = $directories;
         $data['latestCommits']['files'] = $files;
 
-        return view('repoview', compact('data'));
+        return view('repos.show', compact('data'));
     }
 }
