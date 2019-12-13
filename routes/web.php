@@ -15,14 +15,15 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    
+
     return view('welcome');
 });
+
+Route::get('repo/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoViewController@index']);
 
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
-
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	
@@ -39,6 +40,12 @@ Route::group(['middleware' => 'verified'], function () {
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('user', 'UserController', ['except' => ['show']]);
+
+    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
+    Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
 
 
