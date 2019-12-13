@@ -19,6 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoViewController@index']);
+
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
@@ -26,8 +28,6 @@ Route::group(['middleware' => 'verified'], function () {
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::resource('user', 'UserController', ['except' => ['show']]);
-
-	Route::get('/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoViewController@index']);
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
