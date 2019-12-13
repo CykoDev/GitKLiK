@@ -19,19 +19,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('repo/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoViewController@index']);
+Route::get('repo/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoController@show']);
 
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
 
 	Route::get('/home', 'HomeController@index')->name('home');
-	
+
 	Route::resource('user', 'UserController');
 
 	Route::resource('roles','RoleController');
 	Route::resource('tags','TagController');
-	Route::resource('repository','RepoController');
+	// Route::resource('repo/{userName}/{repoName}','RepoController');
 	Route::resource('commit','CommitController', ['except' => ['edit']]);
 
 	Route::resource('photo','PhotoController', ['except' => ['create']]);
