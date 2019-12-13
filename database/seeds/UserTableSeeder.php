@@ -17,21 +17,12 @@ class UserTableSeeder extends Seeder
         User::truncate();
 
     	User::create([
-            'name'      => 'supahotadmin',
-            'full_name' => 'supa hothothot',
-            'email'     => 'supahot@a.a',
-            'headline'  => 'The headline of a supahot admin bebe',
-            'bio'       => 'Hella noice bio of a supahotadmin',
-            'password'  => 'aaaaaaaa',
-    	]);
-
-    	User::create([
             'name'      => 'randomguy1',
             'full_name' => 'a random guy 1',
             'email'     => 'randomguy1@not.supahot',
             'headline'  => 'The headline of a sad random1 guy',
             'bio'       => 'Hella noice bio of a sad random1 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -40,7 +31,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy2@not.supahot',
             'headline'  => 'The headline of a sad random2 guy',
             'bio'       => 'Hella noice bio of a sad random2 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -49,7 +40,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy3@not.supahot',
             'headline'  => 'The headline of a sad random3 guy',
             'bio'       => 'Hella noice bio of a sad random3 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -58,7 +49,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy4@not.supahot',
             'headline'  => 'The headline of a sad random4 guy',
             'bio'       => 'Hella noice bio of a sad random4 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -67,7 +58,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy5@not.supahot',
             'headline'  => 'The headline of a sad random5 guy',
             'bio'       => 'Hella noice bio of a sad random5 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -76,7 +67,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy6@not.supahot',
             'headline'  => 'The headline of a sad random6 guy',
             'bio'       => 'Hella noice bio of a sad random6 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -85,7 +76,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy7@not.supahot',
             'headline'  => 'The headline of a sad random7 guy',
             'bio'       => 'Hella noice bio of a sad random7 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
 
     	User::create([
@@ -94,7 +85,7 @@ class UserTableSeeder extends Seeder
             'email'     => 'randomguy8@not.supahot',
             'headline'  => 'The headline of a sad random8 guy',
             'bio'       => 'Hella noice bio of a sad random8 guy',
-            'password'  => 'aaaaaaaaaa',
+            'password'  => 'aaaaaaaa',
     	]);
     }
 }
