@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, HasRoles;
 
 
     protected $dates = ['deleted_at'];
@@ -44,6 +46,24 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD Relations
+    |--------------------------------------------------------------------------
+    */
+
+    public function setPasswordAttribute($value){
+
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+
+   /*
+    |--------------------------------------------------------------------------
+    | CRUD Relations
+    |--------------------------------------------------------------------------
+    */
+
     public function repos(){
 
         return $this->hasMany('App\Repository');
@@ -54,9 +74,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasManyThrough('App\Commit', 'App\Repository');
     }
 
-    public function starredRepos(){
+    public function stars(){
 
         return $this->hasMany('App\Star');
+    }
+
+    public function photos(){
+
+        return $this->morphMany('App\Photo', 'imageable');
     }
 
 }

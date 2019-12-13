@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommitsTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateCommitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('commits', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
-            $table->integer('repository_id')->unsigned()->index();
-            $table->integer('hex_code')->unique();
-            $table->string('name');
-            $table->string('branch');
-            $table->text('message')->nullable;
-            $table->string('author');
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateCommitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commits');
+        Schema::dropIfExists('tags');
     }
 }
