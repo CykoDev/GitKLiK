@@ -1,7 +1,12 @@
 @extends('layouts.app', ['class' => 'bg-default'])
 
 @section('content')
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     @include('layouts.headers.guest')
+    
+    <link href="{{ asset('css/registerCss.css') }}" rel="stylesheet">
+    <link href="{{ asset('js/registerJs.js') }}">
 
     <div class="container mt--8 pb-5">
         <!-- Table -->
@@ -30,6 +35,18 @@
 
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
+                                   <div class="container">
+                                            <div class="avatar-upload">
+                                                <div class="avatar-edit">
+                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUpload"></label>
+                                                </div>
+                                                <div class="avatar-preview">
+                                                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                                     </div>
@@ -136,4 +153,33 @@
             </div>
         </div>
     </div>
+    
+    
+    
+    
+
+<script type="text/javascript">
+
+function readURL(input) {
+     
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+            $('#imagePreview').hide();
+            $('#imagePreview').fadeIn(650);
+           
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#imageUpload").change(function() {
+    console.log("here");
+    readURL(this);
+});
+
+</script>
 @endsection
+
+
+

@@ -1,21 +1,10 @@
-/*
-.example{
-    height: 100%;
-    overflow: scroll;
-    
-    
-}
-*/
+
 
 .scrollOff::-webkit-scrollbar {
   display: none;
 }
 
-/*
-.example::-webkit-scrollbar {
-  display: none;
-}
-*/
+
 
 
 
