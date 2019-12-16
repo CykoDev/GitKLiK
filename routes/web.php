@@ -72,3 +72,25 @@ Route::get('/test/bat', function(){
 
 	return $output;
 });
+
+
+
+Route::get('/test/upload', function(){
+
+	return view('testupload');
+});
+
+use Illuminate\Http\Request;
+
+Route::post('process', function (Request $request) {
+    $photos = $request->file('photos');
+    $paths  = [];
+
+    foreach ($photos as $photo) {
+        $extension = $photo->getClientOriginalExtension();
+        $filename  = 'profile-photo-' . time() . '.' . $extension;
+        $paths[]   = $photo->storeAs('photos', $filename);
+    }
+
+    dd($paths);
+});
