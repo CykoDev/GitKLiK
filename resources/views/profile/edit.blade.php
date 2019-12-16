@@ -6,7 +6,8 @@
         'description' => __('This is your profile page. You can see the progress you\'ve made with your work and manage your projects or assigned tasks'),
         'class' => 'col-lg-7'
     ])   
-
+    <link href="{{ asset('css/profileCustom.css') }}" rel="stylesheet">
+    
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -65,8 +66,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-8 order-xl-1">
-                <div class="card bg-secondary shadow">
+            <div class="cardContainer col-xl-8 order-xl-1">
+                <div class=" card bg-secondary shadow">
+                   
+                   
+                   
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <h3 class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
