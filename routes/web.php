@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('repo/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoController@show']);
+Route::get('repo/{userName}/{repoPath}', ['as' => 'repo', 'uses' => 'RepoController@show']);
 
 Auth::routes(['verify' => true]);
 
