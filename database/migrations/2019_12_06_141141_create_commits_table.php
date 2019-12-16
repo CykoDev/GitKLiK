@@ -16,11 +16,11 @@ class CreateCommitsTable extends Migration
         Schema::create('commits', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
             $table->integer('repository_id')->unsigned()->index();
-            $table->integer('code')->unique();
+            $table->integer('hex_code')->unique();
             $table->string('name');
             $table->string('branch');
             $table->text('message')->nullable;
-            $table->string('Author');
+            $table->string('author');
             $table->timestamps();
         });
     }

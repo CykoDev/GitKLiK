@@ -8,7 +8,17 @@ class Repository extends Model
 {
     //
 
+    protected $fillable = [
+        'user_id', 'name', 'description',
+    ];
 
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CRUD Relations
+    |--------------------------------------------------------------------------
+    */
 
     public function user(){
 
@@ -23,5 +33,15 @@ class Repository extends Model
     public function stars(){
 
     	return $this->hasMany('App\Star');
+    }
+
+    public function photos(){
+
+        return $this->morphMany('App\Photo', 'imageable');
+    }
+
+    public function tags(){
+
+        return $this->belongsToMany('App\Tag');
     }
 }
