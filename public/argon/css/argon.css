@@ -9760,31 +9760,31 @@ button.bg-darker:focus
 
 .m--7
 {
-    margin: 2rem !important;
+    margin: -6rem !important;
 }
 
 .mt--7,
 .my--7
 {
-    margin-top: 2rem !important;
+    margin-top: -6rem !important;
 }
 
 .mr--7,
 .mx--7
 {
-    margin-right: 2rem !important;
+    margin-right: -6rem !important;
 }
 
 .mb--7,
 .my--7
 {
-    margin-bottom: 2rem !important;
+    margin-bottom: -6rem !important;
 }
 
 .ml--7,
 .mx--7
 {
-    margin-left: 2rem !important;
+    margin-left: -6rem !important;
 }
 
 .m--6
@@ -10578,7 +10578,7 @@ button.bg-darker:focus
 .pt-8,
 .py-8
 {
-    padding-top: 3rem !important;
+    padding-top: 8rem !important;
 }
 
 .pr-8,
@@ -10590,7 +10590,7 @@ button.bg-darker:focus
 .pb-8,
 .py-8
 {
-    padding-bottom: 3rem !important;
+    padding-bottom: 8rem !important;
 }
 
 .pl-8,
@@ -19257,7 +19257,7 @@ textarea[resize='horizontal']
     bottom: 0;
 
     display: block;
-    overflow-y: hidden; 
+    overflow-y: auto; 
 
     width: 100%;
     max-width: 250px;
@@ -19503,9 +19503,10 @@ textarea[resize='horizontal']
         position: fixed;
         top: 0;
         bottom: 0;
-        overflow-y: auto;
-        display: block; 
-        
+
+        display: block;
+        overflow-y: auto; 
+
         width: 100%;
         max-width: 250px;
         padding-right: 1.5rem;
@@ -19630,7 +19631,7 @@ textarea[resize='horizontal']
         bottom: 0;
 
         display: block;
-        overflow-y: hidden; 
+        overflow-y: auto; 
 
         width: 100%;
         max-width: 250px;
@@ -19756,7 +19757,7 @@ textarea[resize='horizontal']
         bottom: 0;
 
         display: block;
-        overflow-y: hidden; 
+        overflow-y: auto; 
 
         width: 100%;
         max-width: 250px;
@@ -20094,7 +20095,7 @@ textarea[resize='horizontal']
         right: 0;
         left: 0;
 
-        overflow-y: hidden;
+        overflow-y: auto;
 
         width: calc(100% - 1.4rem);
         height: auto !important;
