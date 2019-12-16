@@ -14,6 +14,8 @@ class TagController extends Controller
     public function index()
     {
         //
+
+        return view('tags.index');
     }
 
     /**
@@ -48,6 +50,8 @@ class TagController extends Controller
     public function show($id)
     {
         //
+
+        return view('tags.show');
     }
 
     /**
@@ -59,6 +63,8 @@ class TagController extends Controller
     public function edit($id)
     {
         //
+
+        return view('tags.edit');
     }
 
     /**
