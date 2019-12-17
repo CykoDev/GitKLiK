@@ -44,6 +44,9 @@ Route::group(['middleware' => 'verified'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController', ['except' => ['show']]);
+
+
+
 });
 
 
@@ -82,15 +85,19 @@ Route::get('/test/upload', function(){
 
 use Illuminate\Http\Request;
 
-Route::post('process', function (Request $request) {
-    $photos = $request->file('photos');
+Route::any('test/process', function (Request $request) {
+   	
+   	echo $request;
+   	$photos = $request->file('photos');
+   	echo $photos;
     $paths  = [];
 
-    foreach ($photos as $photo) {
+    foreach($photos as $photo) {
         $extension = $photo->getClientOriginalExtension();
         $filename  = 'profile-photo-' . time() . '.' . $extension;
         $paths[]   = $photo->storeAs('photos', $filename);
     }
 
     dd($paths);
+
 });

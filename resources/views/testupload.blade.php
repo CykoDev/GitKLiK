@@ -1,6 +1,4 @@
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>File uploads</title>
 <style>
   * {
@@ -10,12 +8,9 @@
   }
 </style>
 
-<form action="/process" enctype="multipart/form-data" method="POST">
-    <p>
-        <label for="photo">
-            <input type="file" name="photos[]" id="photo" multiple>
-        </label>
-    </p>
-    <button>Upload</button>
-    {{ csrf_field() }}
+<form action="process" enctype="multipart/form-data" method="post">
+	@csrf
+
+    <input id="upload" name="photos" type="file" value="Input" webkitdirectory directory multiple>
+    <input type="submit" value="submit">
 </form>
