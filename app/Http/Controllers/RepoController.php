@@ -37,18 +37,33 @@ class RepoController extends Controller
      */
     public function create()
     {
-        $targetPath = 'directory';
-        $repo = Repository::create([
-            'user_id' => Auth::user()->id,
-            'name' => $targetPath,
-            'description' => 'Some description this is',
-            ]);
-        User::findOrFail(Auth::user()->id)->repos()->save($repo);
-
-        Storage::makeDirectory('repos/clones'.$targetPath);
-        Storage::put('repos/clones'.$targetPath.'/README.md', 'This is a readme file.');
-        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
         // return view('repos.create');
+    }
+
+    public function create_new()
+    {
+        return view('repos.create_new');
+    }
+
+    public function store_new(Request $request)
+    {
+        $user = Auth::user();
+        $repoName = $request['repoName'];
+        $repo = Repository::create([
+            'user_id' => $user->id,
+            'name' => $repoName,
+            'description' => $request['repoDesc'],
+            ]);
+        User::findOrFail($user->id)->repos()->save($repo);
+
+
+        if ($request->has('readme')) {
+            Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
+        }
+        if ($request->has('gitignore')) {
+            Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
+        }
+        return redirect('repo/'.$user->name.'/'.$repoName);
     }
 
     /**

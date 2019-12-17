@@ -28,7 +28,8 @@ Route::group(['middleware' => 'verified'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create']);
+    Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create_new']);
+    Route::post('/repo', ['as' => 'repo.create_new', 'uses' => 'RepoController@store_new']);
 
     Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@createImport']);
     Route::put('/repo/create/import/{name}', ['as' => 'repo.create.importEnd', 'uses' => 'RepoController@createImportEnd']);
