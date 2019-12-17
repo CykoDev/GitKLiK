@@ -20,7 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('repo/{userName}/{repoPath}', ['as' => 'repo', 'uses' => 'RepoController@show']);
+Route::get('repository/{userName}/{repoPath}', ['as' => 'repo.view', 'uses' => 'RepoController@show']);
 
 Auth::routes(['verify' => true]);
 
@@ -29,6 +29,9 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create']);
+
+    Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@createImport']);
+    Route::put('/repo/create/import/{name}', ['as' => 'repo.create.importEnd', 'uses' => 'RepoController@createImportEnd']);
 
 	Route::resource('user', 'UserController');
 
