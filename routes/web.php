@@ -37,19 +37,20 @@ Route::group(['middleware' => 'verified'], function () {
 	Route::resource('tags','TagController');
 	// Route::resource('repo/{userName}/{repoName}','RepoController');
 	Route::resource('commit','CommitController', ['except' => ['edit']]);
+	Route::resource('stars','StarController', ['except' => ['show']]);
 
 	Route::resource('photo','PhotoController', ['except' => ['create']]);
 
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
+	Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
+	Route::put('profile/edit', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
+    Route::get('profile', ['as' => 'profile.profile', 'uses' => 'ProfileController@show']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController', ['except' => ['show']]);
 
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-    Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
-    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+
+
 });
 
 
@@ -77,4 +78,30 @@ Route::get('/test/bat', function(){
 	}
 
 	return $output;
+});
+
+
+
+Route::get('/test/upload', function(){
+
+	return view('testupload');
+});
+
+use Illuminate\Http\Request;
+
+Route::any('test/process', function (Request $request) {
+   	
+   	echo $request;
+   	$photos = $request->file('photos');
+   	echo $photos;
+    $paths  = [];
+
+    foreach($photos as $photo) {
+        $extension = $photo->getClientOriginalExtension();
+        $filename  = 'profile-photo-' . time() . '.' . $extension;
+        $paths[]   = $photo->storeAs('photos', $filename);
+    }
+
+    dd($paths);
+
 });
