@@ -12,7 +12,7 @@
                                 <h3>Create New Repository</h3>
                                 <br>
                             </div>
-                            <form method="POST" action="/repos">
+                            <form method="POST" action="/repo">
                                 @csrf
                                 <div class="form-group">
                                     <div class="input-group input-group-alternative mb-3">

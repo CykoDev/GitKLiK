@@ -29,6 +29,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create_new']);
+    Route::post('/repo', ['as' => 'repo.create_new', 'uses' => 'RepoController@store_new']);
 
 	Route::resource('user', 'UserController');
 
