@@ -37,6 +37,12 @@ class RepoController extends Controller
      */
     public function create()
     {
+        // return view('repos.create');
+    }
+
+    public function create_new()
+    {
+        return view('repos.create_new');
         $targetPath = 'directory';
         $repo = Repository::create([
             'user_id' => Auth::user()->id,
@@ -46,9 +52,9 @@ class RepoController extends Controller
         User::findOrFail(Auth::user()->id)->repos()->save($repo);
 
         Storage::makeDirectory('repos/'.$targetPath);
-        Storage::put('repos/'.$targetPath.'/README.md', 'This is a readme file.');
-        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
-        // return view('repos.create');
+        Storage::put('repos/clones/'.$targetPath.'/README.md', 'This is a readme file.');
+        Storage::put('repos/clones/'.$targetPath.'/.gitignore', '');
+        $absoluteRepoPath = storage_path().'\app\repos\clones\\'.$targetPath.'\\';
     }
 
     /**
@@ -76,8 +82,8 @@ class RepoController extends Controller
             array_push($starUsers, $star->user);
         }
 
-        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
-        $relativeRepoPath = 'repos\\'.$targetPath;
+        $absoluteRepoPath = storage_path().'\app\repos\clones\\'.$targetPath.'\\';
+        $relativeRepoPath = 'repos\clones\\'.$targetPath;
         $pathSize = strlen($relativeRepoPath);
 
         $filePaths = Storage::files($relativeRepoPath);
