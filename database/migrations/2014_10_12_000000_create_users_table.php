@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('headline', 500)->nullable();
             $table->text('bio')->nullable();
             $table->string('password');
+            $table->string('avatar')->default('DEFAULT_user.jpg');
+            $table->string('cover')->default('DEFAULT_cover.jpg');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
