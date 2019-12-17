@@ -48,7 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /*
     |--------------------------------------------------------------------------
-    | CRUD Relations
+    | Mutators | Accessors
     |--------------------------------------------------------------------------
     */
 

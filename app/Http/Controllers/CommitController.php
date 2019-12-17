@@ -14,6 +14,8 @@ class CommitController extends Controller
     public function index()
     {
         //
+
+        return view('commits.index');
     }
 
     /**
@@ -24,6 +26,8 @@ class CommitController extends Controller
     public function create()
     {
         //
+
+        return view('commits.create');
     }
 
     /**
@@ -46,6 +50,8 @@ class CommitController extends Controller
     public function show($id)
     {
         //
+
+        return view('commits.show');
     }
 
     /**
