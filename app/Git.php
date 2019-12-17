@@ -26,4 +26,10 @@ class Git extends Model
             "message" => $str[3],
         ];
     }
+
+    public static function createRepository($repoPath) {
+        $gitPath = $repoPath . '\.git';
+        $str = shell_exec("git --git-dir=".$gitPath." init");
+        return $str;
+    }
 }

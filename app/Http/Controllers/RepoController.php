@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 use App\Repository;
 use App\Git;
@@ -36,7 +37,18 @@ class RepoController extends Controller
      */
     public function create()
     {
-        return view('repos.create');
+        $targetPath = 'directory';
+        $repo = Repository::create([
+            'user_id' => Auth::user()->id,
+            'name' => $targetPath,
+            'description' => 'Some description this is',
+            ]);
+        User::findOrFail(Auth::user()->id)->repos()->save($repo);
+
+        Storage::makeDirectory('repos/'.$targetPath);
+        Storage::put('repos/'.$targetPath.'/README.md', 'This is a readme file.');
+        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
+        // return view('repos.create');
     }
 
     /**
