@@ -103,9 +103,27 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">Repository</h3>
-                        </div>
-                        {{-- <div class="col text-right">
+                            <h3 class="mb-0">
+                                @php
+                                $pathElements = $data['pathElements'];
+                                $size = sizeof($pathElements);
+                                $path = '';
+                                if ($size == 1) {
+                                $path = $pathElements[0];
+                                } else {
+                                $href = $pathElements[0];
+                                $path = '<a href="'.$href.'">'.$pathElements[0].'</a>';
+                                for ($i = 1; $i < $size; $i++) { if ($i==$size - 1) { $path=$path.' / '.$pathElements[$i];
+                                    } else { $href=$href."||".$pathElements[$i]; $path=$path.' /'.' <a
+                                    href="'.$href.'">
+                                    '.$pathElements[$i].'</a>';
+                                    }
+                                    }
+                                    }
+                                    echo $path;
+                                    @endphp
+                            </h3>
+                        </div> {{-- <div class="col text-right">
                             <a href="#!" class="btn btn-sm btn-primary">See all</a>
                         </div> --}}
                     </div>
@@ -125,7 +143,7 @@
                             @if($key != '.git')
                             <tr>
                                 <th scope="row">
-                                    <a href="#">
+                                    <a href="{{ $data['repoPath'].'||'.$key }}">
                                         @if(strlen($key) > 20)
                                         {{ '/'.substr($key, 0, 17).'...' }}
                                         @else
@@ -220,7 +238,6 @@
                 </div>
 
                 <div class="card-body">
-
                     {!! $parsedown->text(file_get_contents($data['absPath'].'README.md')) !!}
                 </div>
             </div>

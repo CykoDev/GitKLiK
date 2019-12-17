@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Auth;
 use App\User;
 use App\Repository;
 use App\Git;
@@ -36,7 +37,18 @@ class RepoController extends Controller
      */
     public function create()
     {
-        return view('repos.create');
+        $targetPath = 'directory';
+        $repo = Repository::create([
+            'user_id' => Auth::user()->id,
+            'name' => $targetPath,
+            'description' => 'Some description this is',
+            ]);
+        User::findOrFail(Auth::user()->id)->repos()->save($repo);
+
+        Storage::makeDirectory('repos/'.$targetPath);
+        Storage::put('repos/'.$targetPath.'/README.md', 'This is a readme file.');
+        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
+        // return view('repos.create');
     }
 
     /**
@@ -45,8 +57,16 @@ class RepoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($userName, $repoName)
+    public function show($userName, $repoPath)
     {
+        $pathElements = explode('||', $repoPath);
+        $repoName = $pathElements[0];
+
+        $targetPath = $repoName;
+        for ($i = 1; $i < sizeof($pathElements); $i++) {
+            $targetPath = $targetPath.'\\'.$pathElements[$i];
+        }
+
         $user = User::whereName($userName)->first();
         $repo = $user->repos()->whereName($repoName)->first();
         $stars = $repo->stars;
@@ -56,8 +76,8 @@ class RepoController extends Controller
             array_push($starUsers, $star->user);
         }
 
-        $absoluteRepoPath = storage_path().'\app\repos\\'.$repoName.'\\';
-        $relativeRepoPath = 'repos\\'.$repoName;
+        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
+        $relativeRepoPath = 'repos\\'.$targetPath;
         $pathSize = strlen($relativeRepoPath);
 
         $filePaths = Storage::files($relativeRepoPath);
@@ -77,6 +97,8 @@ class RepoController extends Controller
         }
 
         $data = [
+            'pathElements' => $pathElements,
+            'repoPath' => $repoPath,
             'absPath' => $absoluteRepoPath,
             'user' => $user,
             'repo' => $repo,

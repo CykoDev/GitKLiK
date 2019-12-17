@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use App\Git;
 
 
 /*
@@ -19,13 +20,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('repo/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoController@show']);
+Route::get('repo/{userName}/{repoPath}', ['as' => 'repo', 'uses' => 'RepoController@show']);
 
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
 
-	Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create']);
 
 	Route::resource('user', 'UserController');
 
