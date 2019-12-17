@@ -56,6 +56,7 @@ class RepoController extends Controller
             ]);
         User::findOrFail($user->id)->repos()->save($repo);
 
+
         if ($request->has('readme')) {
             Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
         }
@@ -155,5 +156,32 @@ class RepoController extends Controller
      */
     public function destroy(User  $user)
     {
+    }
+
+
+    public function createImport(){
+
+
+        $title = 'klik';
+        $absolutePath = storage_path().'\app\public\repos\remotes\\'.$title.'.git\\';
+        $data = [
+            'title' => $title,
+            'absolutePath' => $absolutePath,
+        ];
+
+        if (!Git::initBare($title)){
+            return 'ERROR: git init bare error';
+        }
+
+        return view('repos.create_import', compact('data'));
+    }
+
+    public function createImportEnd($name){
+
+        if (!Git::cloneRemote($name)){
+            return 'ERROR: git clone error';
+        }
+
+        return redirect(route('repo.view', [Auth::user()->name, $name]));
     }
 }
