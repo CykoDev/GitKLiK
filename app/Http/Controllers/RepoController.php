@@ -25,60 +25,39 @@ class RepoController extends Controller
          $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
     }
 
+    
+    public function edit(User $user, Repository $repo)
+    {
+        // return view('repos.edit');
+    }
+
+    public function update(UserRequest $request, User  $user)
+    {
+
+    }
+
+    public function destroy(User  $user)
+    {
+
+    }
+    
+
+    /*
+    |--------------------------------------------------------------------------
+    | Display Functions
+    |--------------------------------------------------------------------------
+    */
+
     public function index(User $model)
     {
         return view('repos.index');
     }
 
-    /**
-     * Show the form for creating a new user
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
+    public function index_user(User $model)
     {
-        // return view('repos.create');
+        return view('repos.index');
     }
 
-    public function create_new()
-    {
-        return view('repos.create_new');
-    }
-
-    public function create_directory(Request $request)
-    {
-        $dir = $request['relPath'].'\\'.$request['dirName'];
-        Storage::makeDirectory($dir);
-        return back();
-    }
-
-    public function store_new(Request $request)
-    {
-        $user = Auth::user();
-        $repoName = $request['repoName'];
-        $repo = Repository::create([
-            'user_id' => $user->id,
-            'name' => $repoName,
-            'description' => $request['repoDesc'],
-            ]);
-        User::findOrFail($user->id)->repos()->save($repo);
-
-
-        if ($request->has('readme')) {
-            Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
-        }
-        if ($request->has('gitignore')) {
-            Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
-        }
-        return redirect('repo/'.$user->name.'/'.$repoName);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($userName, $repoPath)
     {
         $pathElements = explode('||', $repoPath);
@@ -134,38 +113,45 @@ class RepoController extends Controller
         return view('repos.show', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified user
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\View\View
-     */
-    public function edit(User $user, Repository $repo)
+
+    /*
+    |--------------------------------------------------------------------------
+    | Store Functions
+    |--------------------------------------------------------------------------
+    */
+
+    public function store(Request $request)
     {
-        return view('repos.edit');
+        $user = Auth::user();
+        $repoName = $request['repoName'];
+        $repo = Repository::create([
+            'user_id' => $user->id,
+            'name' => $repoName,
+            'description' => $request['repoDesc'],
+            ]);
+        User::findOrFail($user->id)->repos()->save($repo);
+
+
+        if ($request->has('readme')) {
+            Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
+        }
+        if ($request->has('gitignore')) {
+            Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
+        }
+        return redirect('repo/'.$user->name.'/'.$repoName);
     }
 
-    /**
-     * Update the specified user in storage
-     *
-     * @param  \App\Http\Requests\UserRequest  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(UserRequest $request, User  $user)
-    {
-    }
+    public function store_import(){
 
-    /**
-     * Remove the specified user from storage
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(User  $user)
-    {
-    }
 
+    }
+   
+
+    /*
+    |--------------------------------------------------------------------------
+    | Creation Functions
+    |--------------------------------------------------------------------------
+    */
 
     public function create_import(){
 
@@ -191,5 +177,61 @@ class RepoController extends Controller
         }
 
         return redirect(route('repo.view', [Auth::user()->name, $name]));
+    }
+
+    public function create()
+    {
+        return view('repos.create');
+    }
+
+    public function create_import()
+    {
+        return view('repos.create');
+    }
+
+    public function create_directory(Request $request)
+    {
+        $dir = $request['relPath'].'\\'.$request['dirName'];
+        Storage::makeDirectory($dir);
+        return back();
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Commit Functions
+    |--------------------------------------------------------------------------
+    */
+
+    public function commit_index(){
+
+
+    }
+
+    public function commit_show(){
+
+
+    }
+
+    public function commit_create(){
+
+
+    }
+
+    public function commit_store(){
+
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Star Functions
+    |--------------------------------------------------------------------------
+    */
+
+    public function stars(){
+
+
     }
 }
