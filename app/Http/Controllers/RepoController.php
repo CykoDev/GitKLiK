@@ -45,6 +45,13 @@ class RepoController extends Controller
         return view('repos.create_new');
     }
 
+    public function create_directory(Request $request)
+    {
+        $dir = $request['relPath'].'\\'.$request['dirName'];
+        Storage::makeDirectory($dir);
+        return back();
+    }
+
     public function store_new(Request $request)
     {
         $user = Auth::user();
@@ -115,6 +122,7 @@ class RepoController extends Controller
             'pathElements' => $pathElements,
             'repoPath' => $repoPath,
             'absPath' => $absoluteRepoPath,
+            'relPath' => $relativeRepoPath,
             'user' => $user,
             'repo' => $repo,
             'latestCommits' => [],
@@ -159,7 +167,7 @@ class RepoController extends Controller
     }
 
 
-    public function createImport(){
+    public function create_import(){
 
 
         $title = 'klik';
@@ -176,7 +184,7 @@ class RepoController extends Controller
         return view('repos.create_import', compact('data'));
     }
 
-    public function createImportEnd($name){
+    public function create_import_end($name){
 
         if (!Git::cloneRemote($name)){
             return 'ERROR: git clone error';

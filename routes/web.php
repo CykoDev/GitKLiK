@@ -30,9 +30,10 @@ Route::group(['middleware' => 'verified'], function () {
 
     Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create_new']);
     Route::post('/repo', ['as' => 'repo.create_new', 'uses' => 'RepoController@store_new']);
+    Route::post('/repo/dir', ['as' => 'repo.create_dir', 'uses' => 'RepoController@create_directory']);
 
-    Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@createImport']);
-    Route::put('/repo/create/import/{name}', ['as' => 'repo.create.importEnd', 'uses' => 'RepoController@createImportEnd']);
+    Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@create_import']);
+    Route::put('/repo/create/import/{name}', ['as' => 'repo.create.importEnd', 'uses' => 'RepoController@create_import_end']);
 
 	Route::resource('user', 'UserController');
 
@@ -93,7 +94,7 @@ Route::get('/test/upload', function(){
 use Illuminate\Http\Request;
 
 Route::any('test/process', function (Request $request) {
-   	
+
    	echo $request;
    	$photos = $request->file('photos');
    	echo $photos;

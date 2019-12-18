@@ -123,9 +123,44 @@
                                     echo $path;
                                     @endphp
                             </h3>
-                        </div> {{-- <div class="col text-right">
-                            <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                        </div> --}}
+                        </div>
+                        <div class="col text-right">
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newFolderModal">New
+                                Folder</button>
+                        </div>
+                        <div class="modal fade" id="newFolderModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="/repo/dir">
+                                            @csrf
+                                            <input type="hidden" name="relPath" value="{{ $data['relPath'] }}">
+                                            <div class="form-group">
+                                                <div class="input-group input-group-alternative mb-3">
+                                                    <div class="input-group-prepend">
+                                                        {{-- <span class="input-group-text"><i class="ni ni-hat-3"></i></span> --}}
+                                                        <input class="form-control" type="text" name="dirName"
+                                                            placeholder="New Folder Name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Create Folder</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="table-responsive">
