@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+
 
 class Git extends Model
 {
@@ -30,5 +32,37 @@ class Git extends Model
             "date"    => $str[2],
             "message" => $str[3],
         ];
+    }
+
+    public static function createRepository($repoPath) {
+        $gitPath = $repoPath . '\.git';
+        $str = shell_exec("git --git-dir=".$gitPath." init");
+        return $str;
+    }
+
+    public static function initBare($title){
+
+        Storage::makeDirectory('/public/repos/remotes/'.$title.'.git');
+
+        $absolutePath = storage_path().'\app\public\repos\remotes\\'.$title.'.git\\';
+
+        shell_exec("git --git-dir=".$absolutePath." init --bare");
+
+        return true;
+    }
+
+    public static function cloneRemote($name){
+
+        Storage::makeDirectory('/public/repos/clones/'.$name);
+
+        $absolutePath = storage_path().'\app\public\repos\remotes\\'.$name.'.git\\';
+
+        shell_exec('git clone '.$absolutePath.' '.$name);
+        shell_exec('touch post-receive');
+        shell_exec('chmod +x post-receive');
+        shell_exec('cd '.$absolutePath);
+
+
+        return true;
     }
 }

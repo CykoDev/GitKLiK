@@ -14,6 +14,8 @@ class PhotoController extends Controller
     public function index()
     {
         //
+
+        return view('photos.index');
     }
 
     /**
@@ -46,6 +48,8 @@ class PhotoController extends Controller
     public function show($id)
     {
         //
+
+        return view('photos.show');
     }
 
     /**
@@ -57,6 +61,8 @@ class PhotoController extends Controller
     public function edit($id)
     {
         //
+
+        return view('photos.edit');
     }
 
     /**

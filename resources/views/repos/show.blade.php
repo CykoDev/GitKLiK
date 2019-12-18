@@ -103,11 +103,64 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">Repository</h3>
+                            <h3 class="mb-0">
+                                @php
+                                $pathElements = $data['pathElements'];
+                                $size = sizeof($pathElements);
+                                $path = '';
+                                if ($size == 1) {
+                                $path = $pathElements[0];
+                                } else {
+                                $href = $pathElements[0];
+                                $path = '<a href="'.$href.'">'.$pathElements[0].'</a>';
+                                for ($i = 1; $i < $size; $i++) { if ($i==$size - 1) { $path=$path.' / '.$pathElements[$i];
+                                    } else { $href=$href."||".$pathElements[$i]; $path=$path.' /'.' <a
+                                    href="'.$href.'">
+                                    '.$pathElements[$i].'</a>';
+                                    }
+                                    }
+                                    }
+                                    echo $path;
+                                    @endphp
+                            </h3>
                         </div>
-                        {{-- <div class="col text-right">
-                            <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                        </div> --}}
+                        <div class="col text-right">
+                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newFolderModal">New
+                                Folder</button>
+                        </div>
+                        <div class="modal fade" id="newFolderModal" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" action="/repo/dir">
+                                            @csrf
+                                            <input type="hidden" name="relPath" value="{{ $data['relPath'] }}">
+                                            <div class="form-group">
+                                                <div class="input-group input-group-alternative mb-3">
+                                                    <div class="input-group-prepend">
+                                                        {{-- <span class="input-group-text"><i class="ni ni-hat-3"></i></span> --}}
+                                                        <input class="form-control" type="text" name="dirName"
+                                                            placeholder="New Folder Name">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Create Folder</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -125,7 +178,7 @@
                             @if($key != '.git')
                             <tr>
                                 <th scope="row">
-                                    <a href="#">
+                                    <a href="{{ $data['repoPath'].'||'.$key }}">
                                         @if(strlen($key) > 20)
                                         {{ '/'.substr($key, 0, 17).'...' }}
                                         @else
@@ -220,7 +273,6 @@
                 </div>
 
                 <div class="card-body">
-
                     {!! $parsedown->text(file_get_contents($data['absPath'].'README.md')) !!}
                 </div>
             </div>

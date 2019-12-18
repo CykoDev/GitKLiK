@@ -14,6 +14,8 @@ class StarController extends Controller
     public function index()
     {
         //
+
+        return view('stars.index');
     }
 
     /**

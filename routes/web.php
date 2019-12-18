@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Storage;
+use App\Git;
 
 
 /*
@@ -19,13 +20,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('repo/{userName}/{repoName}', ['as' => 'repo', 'uses' => 'RepoController@show']);
+Route::get('repository/{userName}/{repoPath}', ['as' => 'repo.view', 'uses' => 'RepoController@show']);
 
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'verified'], function () {
 
-	Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create_new']);
+    Route::post('/repo', ['as' => 'repo.create_new', 'uses' => 'RepoController@store_new']);
+    Route::post('/repo/dir', ['as' => 'repo.create_dir', 'uses' => 'RepoController@create_directory']);
+
+    Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@create_import']);
+    Route::put('/repo/create/import/{name}', ['as' => 'repo.create.importEnd', 'uses' => 'RepoController@create_import_end']);
 
 	Route::resource('user', 'UserController');
 
@@ -44,6 +52,9 @@ Route::group(['middleware' => 'verified'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController', ['except' => ['show']]);
+
+
+
 });
 
 
@@ -71,4 +82,30 @@ Route::get('/test/bat', function(){
 	}
 
 	return $output;
+});
+
+
+
+Route::get('/test/upload', function(){
+
+	return view('testupload');
+});
+
+use Illuminate\Http\Request;
+
+Route::any('test/process', function (Request $request) {
+
+   	echo $request;
+   	$photos = $request->file('photos');
+   	echo $photos;
+    $paths  = [];
+
+    foreach($photos as $photo) {
+        $extension = $photo->getClientOriginalExtension();
+        $filename  = 'profile-photo-' . time() . '.' . $extension;
+        $paths[]   = $photo->storeAs('photos', $filename);
+    }
+
+    dd($paths);
+
 });
