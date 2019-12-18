@@ -7,28 +7,32 @@
         'class' => 'col-lg-7'
     ])   
     <link href="{{ asset('css/profileCustom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/picUpdateCss.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                 <div class="card card-profile shadow">
                     <div class="row justify-content-center">
-                        <div class="col-lg-3 order-lg-2">
-                            <div class="card-profile-image">
-                                <a href="#">
-                                    <img src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg" class="rounded-circle">
-                                </a>
-                            </div>
+                       
+                        <div class="picCard">
+                            <div class="avatar-upload">
+                                <div class="avatar-edit">
+                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                    <label for="imageUpload"></label>
+                                </div>
+                                <div class="avatar-preview">
+                                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                    </div>
+                                </div>
+                            </div>   
                         </div>
+                        
                     </div>
-                    <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                        <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-info mr-4">{{ __('Connect') }}</a>
-                            <a href="#" class="btn btn-sm btn-default float-right">{{ __('Message') }}</a>
-                        </div>
-                    </div>
-                    <div class="card-body pt-0 pt-md-4">
-                        <div class="row">
+                    
+                    <div class="card-body">
+                        <div class="info-sm row">
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
@@ -80,6 +84,7 @@
                         <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
                             @csrf
                             @method('put')
+                            
 
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
                             
@@ -173,4 +178,27 @@
         
         @include('layouts.footers.auth')
     </div>
+    
+    
+<script type="text/javascript">
+
+function readURL(input) {
+     
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+            $('#imagePreview').hide();
+            $('#imagePreview').fadeIn(650);
+           
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#imageUpload").change(function() {
+    console.log("here");
+    readURL(this);
+});
+
+</script>
 @endsection
