@@ -3,28 +3,17 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-h1 {
-  font-size: 20px;
-  text-align: center;
-/*  margin: 20px 0 20px;*/
-}
-h1 small {
-  display: block;
-  font-size: 15px;
-/*  padding-top: 8px;*/
-  color: gray;
-}
+
 .avatar-upload {
   position: relative;
   max-width: 205px;
   margin: 50px auto;
-  
 }
 .avatar-upload .avatar-edit {
   position: absolute;
   top:150px;
   right: 25px;
- 
+  z-index: 1;
 /*  top: 10px;*/
 }
 .avatar-upload .avatar-edit input {
@@ -88,8 +77,11 @@ h1 small {
     position: relative;
     margin-top: -150px;
 }
-
-.registerForm{
-    margin-top: 30px;
+.info-sm{
+    margin-top: -80px;
+    
 }
+
+
+
 

@@ -6,47 +6,49 @@
     @include('layouts.headers.guest')
     
     <link href="{{ asset('css/registerCss.css') }}" rel="stylesheet">
-    <link href="{{ asset('js/registerJs.js') }}">
+    
+    
+     
+    
 
+   
     <div class="container mt--8 pb-5">
         <!-- Table -->
+        
+            
+                        
         <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-8">
+           
+           
+            <div class="registerForm registerCard col-lg-6 col-md-8">
+                
                 <div class="card bg-secondary shadow border-0">
-                    <div class="card-header bg-transparent pb-5">
-                        <div class="text-muted text-center mt-2 mb-4"><small>{{ __('Sign up with') }}</small></div>
-                        <div class="text-center">
-                            <a href="#" class="btn btn-neutral btn-icon mr-4">
-                                <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
-                                <span class="btn-inner--text">{{ __('Github') }}</span>
-                            </a>
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/google.svg"></span>
-                                <span class="btn-inner--text">{{ __('Google') }}</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>{{ __('Or sign up with credentials') }}</small>
-                        </div>
+                   
+                    <div class="picCard">
+                <div class="avatar-upload">
+                
+                <div class="avatar-preview">
+                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                </div>
+                </div>
+                <div class="avatar-edit">
+                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                                    <label for="imageUpload"></label>
+                </div>
+            </div>   
+         </div>  
+                    
+                    <div class="card-body px-lg-5 ">
+                           
+                        <p class="text-center text-muted mb-4">Sign Up</p>
+                        
                         <form role="form" method="POST" action="{{ route('register') }}">
                             @csrf
 
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                                                
                                 <div class="input-group input-group-alternative mb-3">
-                                   <div class="container">
-                                            <div class="avatar-upload">
-                                                <div class="avatar-edit">
-                                                    <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                                    <label for="imageUpload"></label>
-                                                </div>
-                                                <div class="avatar-preview">
-                                                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                   
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                                     </div>
