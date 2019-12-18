@@ -37,18 +37,40 @@ class RepoController extends Controller
      */
     public function create()
     {
-        $targetPath = 'directory';
-        $repo = Repository::create([
-            'user_id' => Auth::user()->id,
-            'name' => $targetPath,
-            'description' => 'Some description this is',
-            ]);
-        User::findOrFail(Auth::user()->id)->repos()->save($repo);
-
-        Storage::makeDirectory('repos/'.$targetPath);
-        Storage::put('repos/'.$targetPath.'/README.md', 'This is a readme file.');
-        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
         // return view('repos.create');
+    }
+
+    public function create_new()
+    {
+        return view('repos.create_new');
+    }
+
+    public function create_directory(Request $request)
+    {
+        $dir = $request['relPath'].'\\'.$request['dirName'];
+        Storage::makeDirectory($dir);
+        return back();
+    }
+
+    public function store_new(Request $request)
+    {
+        $user = Auth::user();
+        $repoName = $request['repoName'];
+        $repo = Repository::create([
+            'user_id' => $user->id,
+            'name' => $repoName,
+            'description' => $request['repoDesc'],
+            ]);
+        User::findOrFail($user->id)->repos()->save($repo);
+
+
+        if ($request->has('readme')) {
+            Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
+        }
+        if ($request->has('gitignore')) {
+            Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
+        }
+        return redirect('repo/'.$user->name.'/'.$repoName);
     }
 
     /**
@@ -76,8 +98,8 @@ class RepoController extends Controller
             array_push($starUsers, $star->user);
         }
 
-        $absoluteRepoPath = storage_path().'\app\repos\\'.$targetPath.'\\';
-        $relativeRepoPath = 'repos\\'.$targetPath;
+        $absoluteRepoPath = storage_path().'\app\repos\clones\\'.$targetPath.'\\';
+        $relativeRepoPath = 'repos\clones\\'.$targetPath;
         $pathSize = strlen($relativeRepoPath);
 
         $filePaths = Storage::files($relativeRepoPath);
@@ -100,6 +122,7 @@ class RepoController extends Controller
             'pathElements' => $pathElements,
             'repoPath' => $repoPath,
             'absPath' => $absoluteRepoPath,
+            'relPath' => $relativeRepoPath,
             'user' => $user,
             'repo' => $repo,
             'latestCommits' => [],
@@ -141,5 +164,32 @@ class RepoController extends Controller
      */
     public function destroy(User  $user)
     {
+    }
+
+
+    public function create_import(){
+
+
+        $title = 'klik';
+        $absolutePath = storage_path().'\app\public\repos\remotes\\'.$title.'.git\\';
+        $data = [
+            'title' => $title,
+            'absolutePath' => $absolutePath,
+        ];
+
+        if (!Git::initBare($title)){
+            return 'ERROR: git init bare error';
+        }
+
+        return view('repos.create_import', compact('data'));
+    }
+
+    public function create_import_end($name){
+
+        if (!Git::cloneRemote($name)){
+            return 'ERROR: git clone error';
+        }
+
+        return redirect(route('repo.view', [Auth::user()->name, $name]));
     }
 }
