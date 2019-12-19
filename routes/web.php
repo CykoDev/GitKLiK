@@ -68,16 +68,16 @@ Route::group(['middleware' => 'verified'], function () {
 
 /*
 |--------------------------------------------------------------------------
-| 
+|
 |--------------------------------------------------------------------------
 */
 
 Route::group(['middleware' => 'verified'], function () {
 
-    Route::get('/home',  ['as' => 'home', 'uses' => 'HomeController@index']);	
+    Route::get('/home',  ['as' => 'home', 'uses' => 'HomeController@index']);
 	Route::resource('roles','RoleController');
 	Route::resource('tags','TagController');
-	
+
 });
 
 
@@ -88,4 +88,6 @@ Route::group(['middleware' => 'verified'], function () {
 |--------------------------------------------------------------------------
 */
 
-
+Route::get('/test/general', function() {
+    return view('errors.general');
+});
