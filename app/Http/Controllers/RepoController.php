@@ -11,19 +11,15 @@ use App\Git;
 
 class RepoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
-    {
-         $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
-         					['only' => ['index','show']]);
-         $this->middleware('permission:repository-create', ['only' => ['create','store']]);
-         $this->middleware('permission:repository-edit', ['only' => ['edit','update']]);
-         $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
-    }
+   
+    // function __construct()
+    // {
+    //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
+    //      					['only' => ['index','show']]);
+    //      $this->middleware('permission:repository-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:repository-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
+    // }
 
     
     public function edit(User $user, Repository $repo)
@@ -55,7 +51,7 @@ class RepoController extends Controller
 
     public function index_user(User $model)
     {
-        return view('repos.index');
+        return view('repos.index_user');
     }
 
     public function show($userName, $repoPath)
@@ -121,29 +117,46 @@ class RepoController extends Controller
     */
 
     public function store(Request $request)
-    {
-        $user = Auth::user();
+    { 
+
         $repoName = $request['repoName'];
-        $repo = Repository::create([
-            'user_id' => $user->id,
-            'name' => $repoName,
-            'description' => $request['repoDesc'],
-            ]);
-        User::findOrFail($user->id)->repos()->save($repo);
+
+        switch ($request['submit']){
+
+            case 'new':
+
+                $repo = Repository::create([
+                    'user_id' => $user->id,
+                    'name' => $repoName,
+                    'description' => $request['repoDesc'],
+                    ]);
+                User::findOrFail(Auth::user()->id)->repos()->save($repo);
+
+                if ($request->has('readme')) {
+
+                    Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
+                }
+                if ($request->has('gitignore')) {
+
+                    Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
+                }
+
+                return redirect(route('repo.view', [Auth::user()->name, $repoName]));
+
+                break;
 
 
-        if ($request->has('readme')) {
-            Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
+            case 'import':
+
+                if (!Git::cloneRemote($name)){
+
+                    return 'ERROR: git clone error';
+                }
+
+                return redirect(route('repo.view', [Auth::user()->name, $name]));
+
+                break;  
         }
-        if ($request->has('gitignore')) {
-            Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
-        }
-        return redirect('repo/'.$user->name.'/'.$repoName);
-    }
-
-    public function store_import(){
-
-
     }
    
 
@@ -153,10 +166,8 @@ class RepoController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function create_import(){
+    public function create_import($title){
 
-
-        $title = 'klik';
         $absolutePath = storage_path().'\app\public\repos\remotes\\'.$title.'.git\\';
         $data = [
             'title' => $title,
@@ -170,22 +181,9 @@ class RepoController extends Controller
         return view('repos.create_import', compact('data'));
     }
 
-    public function create_import_end($name){
-
-        if (!Git::cloneRemote($name)){
-            return 'ERROR: git clone error';
-        }
-
-        return redirect(route('repo.view', [Auth::user()->name, $name]));
-    }
-
     public function create()
     {
-        return view('repos.create');
-    }
 
-    public function create_import()
-    {
         return view('repos.create');
     }
 
@@ -197,6 +195,7 @@ class RepoController extends Controller
     }
 
 
+
     /*
     |--------------------------------------------------------------------------
     | Commit Functions
@@ -205,17 +204,17 @@ class RepoController extends Controller
 
     public function commit_index(){
 
-
+        return view('repo.commits.index');
     }
 
     public function commit_show(){
 
-
+        return view('repo.commits.show');
     }
 
     public function commit_create(){
 
-
+        return view('repo.commits.create');
     }
 
     public function commit_store(){
@@ -230,8 +229,10 @@ class RepoController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function stars(){
+    public function stars($repoName){
 
+        $repo = Repository::whereName($repoName)->firstOrFail();
 
+        return view('repo.stars.index', compact('repo'));
     }
 }
