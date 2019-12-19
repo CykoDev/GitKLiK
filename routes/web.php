@@ -1,64 +1,83 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
-use App\Git;
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
+
+Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
 
     return view('welcome');
 });
 
-Route::get('repository/{userName}/{repoPath}', ['as' => 'repo.view', 'uses' => 'RepoController@show']);
 
-Auth::routes(['verify' => true]);
+/*
+|--------------------------------------------------------------------------
+| Repository Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/repo', ['as'=> 'repo.index', 'uses' => 'RepoController@index']);
+Route::get('/repo/{userName}', ['as'=> 'repo.index.user', 'uses' => 'RepoController@index_user']);
+Route::get('/repo/{userName}/{repoName}', ['as'=> 'repo.show', 'uses' => 'RepoController@show']);
+Route::get('/repo/{userName}/{repoName}/stars', ['as'=> 'repo.stars', 'uses' => 'RepoController@stars']);
+Route::get('/repo/{userName}/{repoName}/commits', ['as'=> 'repo.commit.index', 'uses' => 'RepoController@commit_index']);
+Route::get('/repo/{userName}/{repoName}/commits/{commitCode}', ['as'=> 'repo.commit.show', 'uses' => 'RepoController@commit_show']);
+
+Route::group(['middleware' => 'verified'], function (){
+
+    Route::get('/repo/{userName}/create', ['as'=> 'repo.create', 'uses' => 'RepoController@create']);
+    Route::get('/repo/{userName}/create/import', ['as'=> 'repo.create.import', 'uses' => 'RepoController@create_import']);
+    Route::get('/repo/{userName}/{repoName}/edit', ['as'=> 'repo.edit', 'uses' => 'RepoController@edit']);
+
+    Route::post('/repo/{userName}/{repoName}/create/dir', ['as'=> 'repo.create.dir', 'uses' => 'RepoController@create_directory']);
+    Route::post('/repo/{userName}/{repoName}', ['as'=> 'repo.store', 'uses' => 'RepoController@store']);
+    Route::post('/repo/{userName}/{repoName}/import', ['as'=> 'repo.store.import', 'uses' => 'RepoController@store_import']);
+
+    Route::put('/repo/{userName}/{repoName}/edit', ['as'=> 'repo.update', 'uses' => 'RepoController@update']);
+    Route::delete('/repo/{userName}/{repoName}', ['as'=> 'repo.destroy', 'uses' => 'RepoController@destroy']);
+
+    Route::get('/repo/{userName}/{repoName}/commits/create', ['as'=> 'repo.commit.create', 'uses' => 'RepoController@commit_create']);
+    Route::post('/repo/{userName}/{repoName}/commits/store', ['as'=> 'repo.commit.store', 'uses' => 'RepoController@commit_store']);
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| User/Profile Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('profile', ['as' => 'profile.show', 'uses' => 'ProfileController@show']);
 
 Route::group(['middleware' => 'verified'], function () {
 
-    Route::get('/home', 'HomeController@index')->name('home');
-
-    Route::get('/repo/create/new', ['as' => 'repo.create.new', 'uses' => 'RepoController@create_new']);
-    Route::post('/repo', ['as' => 'repo.store', 'uses' => 'RepoController@store_new']);
-    Route::post('/repo/dir', ['as' => 'repo.create_dir', 'uses' => 'RepoController@create_directory']);
-
-    Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@create_import']);
-    Route::put('/repo/create/import/{name}', ['as' => 'repo.create.importEnd', 'uses' => 'RepoController@create_import_end']);
-
-	Route::resource('user', 'UserController');
-
-	Route::resource('roles','RoleController');
-	Route::resource('tags','TagController');
-    
-    Route::resource('repo','RepoController');
-    
-	Route::resource('commit','CommitController', ['except' => ['edit']]);
-	Route::resource('stars','StarController', ['except' => ['show']]);
-
-	Route::resource('photo','PhotoController', ['except' => ['create']]);
-
-	Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-	Route::put('profile/edit', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
-    Route::get('profile', ['as' => 'profile.profile', 'uses' => 'ProfileController@show']);
-	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
-
-    Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('user', 'UserController', ['except' => ['show']]);
 
-
-
+    Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
+    Route::put('profile/edit', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
+    Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+|
+|--------------------------------------------------------------------------
+*/
+
+Route::group(['middleware' => 'verified'], function () {
+
+    Route::get('/home',  ['as' => 'home', 'uses' => 'HomeController@index']);
+	Route::resource('roles','RoleController');
+	Route::resource('tags','TagController');
+
+});
 
 
 
@@ -68,46 +87,6 @@ Route::group(['middleware' => 'verified'], function () {
 |--------------------------------------------------------------------------
 */
 
-
-Route::get('/test/bat', function(){
-
-
-	$output = explode(" ", shell_exec('git show --raw '));
-
-	$i = 0;
-	while($i<sizeof($output)){
-
-
-		$output[$i] = explode(" ", $output[$i]);
-
-		$i+=1;
-	}
-
-	return $output;
-});
-
-
-
-Route::get('/test/upload', function(){
-
-	return view('testupload');
-});
-
-use Illuminate\Http\Request;
-
-Route::any('test/process', function (Request $request) {
-
-   	echo $request;
-   	$photos = $request->file('photos');
-   	echo $photos;
-    $paths  = [];
-
-    foreach($photos as $photo) {
-        $extension = $photo->getClientOriginalExtension();
-        $filename  = 'profile-photo-' . time() . '.' . $extension;
-        $paths[]   = $photo->storeAs('photos', $filename);
-    }
-
-    dd($paths);
-
+Route::get('/test/general', function() {
+    return view('errors.general');
 });
