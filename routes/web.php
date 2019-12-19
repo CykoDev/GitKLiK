@@ -28,8 +28,8 @@ Route::group(['middleware' => 'verified'], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/repo/create', ['as' => 'repo.create', 'uses' => 'RepoController@create_new']);
-    Route::post('/repo', ['as' => 'repo.create_new', 'uses' => 'RepoController@store_new']);
+    Route::get('/repo/create/new', ['as' => 'repo.create.new', 'uses' => 'RepoController@create_new']);
+    Route::post('/repo', ['as' => 'repo.store', 'uses' => 'RepoController@store_new']);
     Route::post('/repo/dir', ['as' => 'repo.create_dir', 'uses' => 'RepoController@create_directory']);
 
     Route::get('/repo/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@create_import']);
@@ -39,7 +39,9 @@ Route::group(['middleware' => 'verified'], function () {
 
 	Route::resource('roles','RoleController');
 	Route::resource('tags','TagController');
-	// Route::resource('repo/{userName}/{repoName}','RepoController');
+    
+    Route::resource('repo','RepoController');
+    
 	Route::resource('commit','CommitController', ['except' => ['edit']]);
 	Route::resource('stars','StarController', ['except' => ['show']]);
 
