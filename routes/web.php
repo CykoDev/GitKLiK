@@ -111,3 +111,12 @@ Route::any('test/process', function (Request $request) {
     dd($paths);
 
 });
+
+
+Route::get('create/import', function () {
+return view("repos.create_import");
+});
+
+Route::get('create', function () {
+	return view("repos.create");
+	});
