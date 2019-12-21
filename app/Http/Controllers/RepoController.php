@@ -27,17 +27,35 @@ class RepoController extends Controller
         // return view('repos.edit');
     }
 
-    public function edit_file($path)
+    public function edit_file($userName, $repoPath)
     {
-        // return view('repos.edit');
+        $pathElements = explode('||', $repoPath);
+        $repoName = $pathElements[0];
+
+        $targetPath = $repoName;
+        for ($i = 1; $i < sizeof($pathElements); $i++) {
+            $targetPath = $targetPath . '\\' . $pathElements[$i];
+        }
+
+        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $data = [
+            'content' => Storage::get($relativeRepoPath),
+            'userName' => $userName,
+            'repoName' => $repoName,
+            'relPath' => $relativeRepoPath,
+        ];
+
+        return view('repos.files.edit', compact('data'));
     }
 
     public function update(Request $request, User  $user)
     {
     }
 
-    public function file_update($path)
+    public function file_update(Request $request)
     {
+        Storage::put($request['relPath'], $request['code']);
+        return redirect('/' . $request['userName'] . '/repository/' . $request['repoName']);
     }
 
     public function destroy(User  $user)
