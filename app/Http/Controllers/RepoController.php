@@ -42,6 +42,7 @@ class RepoController extends Controller
             'content' => Storage::get($relativeRepoPath),
             'userName' => $userName,
             'repoName' => $repoName,
+            'repoPath' => $repoPath,
             'relPath' => $relativeRepoPath,
         ];
 
@@ -55,7 +56,14 @@ class RepoController extends Controller
     public function file_update(Request $request)
     {
         Storage::put($request['relPath'], $request['code']);
-        return redirect('/' . $request['userName'] . '/repository/' . $request['repoName']);
+        $pathElements = explode('||', $request['repoPath']);
+
+        $targetPath = $pathElements[0];
+        for ($i = 1; $i < sizeof($pathElements) - 1; $i++) {
+            $targetPath = $targetPath . '||' . $pathElements[$i];
+        }
+
+        return redirect('/' . $request['userName'] . '/repository/' . $targetPath);
     }
 
     public function destroy(User  $user)
