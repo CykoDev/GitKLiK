@@ -131,8 +131,9 @@ class RepoController extends Controller
         }
 
         $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $data = Storage::get($relativeRepoPath);
 
-        return Storage::get($relativeRepoPath);
+        return view('repos.files.show', compact('data'));
     }
 
 
