@@ -14,7 +14,6 @@ Route::get('/', function () {
 });
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Repository Routes
@@ -92,4 +91,6 @@ Route::group(['middleware' => 'verified'], function () {
 |--------------------------------------------------------------------------
 */
 
-
+Route::get('/test/general', function() {
+    return view('errors.general');
+});
