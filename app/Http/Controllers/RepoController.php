@@ -11,7 +11,7 @@ use App\Git;
 
 class RepoController extends Controller
 {
-   
+
     // function __construct()
     // {
     //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
@@ -21,8 +21,13 @@ class RepoController extends Controller
     //      $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
     // }
 
-    
+
     public function edit(User $user, Repository $repo)
+    {
+        // return view('repos.edit');
+    }
+
+    public function edit_file($path)
     {
         // return view('repos.edit');
     }
@@ -32,11 +37,21 @@ class RepoController extends Controller
 
     }
 
+    public function file_update($path)
+    {
+
+    }
+
     public function destroy(User  $user)
     {
 
     }
-    
+
+    public function destroy_file($path)
+    {
+
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -109,6 +124,11 @@ class RepoController extends Controller
         return view('repos.show', compact('data'));
     }
 
+    public function file_show($path)
+    {
+
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +137,7 @@ class RepoController extends Controller
     */
 
     public function store(Request $request)
-    { 
+    {
 
         $repoName = $request['repoName'];
 
@@ -155,10 +175,10 @@ class RepoController extends Controller
 
                 return redirect(route('repo.view', [Auth::user()->name, $name]));
 
-                break;  
+                break;
         }
     }
-   
+
 
     /*
     |--------------------------------------------------------------------------
