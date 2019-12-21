@@ -32,7 +32,7 @@ class RepoController extends Controller
         // return view('repos.edit');
     }
 
-    public function update(UserRequest $request, User  $user)
+    public function update(Request $request, User  $user)
     {
     }
 
@@ -120,8 +120,19 @@ class RepoController extends Controller
         return view('repos.show', compact('data'));
     }
 
-    public function file_show($path)
+    public function file_show($userName, $repoPath)
     {
+        $pathElements = explode('||', $repoPath);
+        $repoName = $pathElements[0];
+
+        $targetPath = $repoName;
+        for ($i = 1; $i < sizeof($pathElements); $i++) {
+            $targetPath = $targetPath . '\\' . $pathElements[$i];
+        }
+
+        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+
+        return Storage::get($relativeRepoPath);
     }
 
 
