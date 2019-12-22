@@ -93,3 +93,12 @@ Route::group(['middleware' => 'verified'], function () {
 Route::get('/test/general', function () {
     return view('errors.general');
 });
+
+
+Route::get('create/import', function () {
+return view("repos.create_import");
+});
+
+Route::get('create', function () {
+	return view("repos.create");
+	});
