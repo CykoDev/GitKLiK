@@ -19,12 +19,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('login-page', require('./components/login.vue').default);
-
-// import login from './components/login.vue';
-
-// Vue.component('login-page', login);
+Vue.component('register-page', require('./components/register.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -32,8 +27,6 @@ Vue.component('login-page', require('./components/login.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-window.onload = function() {
-    new Vue({
-        el: '#app',
-    });
-}
+new Vue({
+    el: '#register',
+});
