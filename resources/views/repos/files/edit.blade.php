@@ -8,6 +8,8 @@
     ])   
    
 	<link href="{{ asset('css/codeCss.css') }}" rel="stylesheet">
+   <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
     
     <div class="container-fluid mt--7">
         <div class="row">
@@ -35,7 +37,7 @@
                             <textarea style="height:80vh" data-readonly="true" data-editor="php" class="form-control" name="code">{!! $data['content'] !!}</textarea>
                             
                             <div class="text-center">
-                                    <button type="submit" name="submit" class="btn btn-success mt-4">{{ __('Submit') }}</button>
+                                    <button type="submit" name="submit" class="btn btn-grey mt-4">{{ __('Submit') }}</button>
                             </div>
                         </form>
 

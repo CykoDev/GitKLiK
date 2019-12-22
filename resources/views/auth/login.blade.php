@@ -2,6 +2,8 @@
 
 @section('content')
     @include('layouts.headers.guest')
+    
+    <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
@@ -67,7 +69,7 @@
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
+                                <button style="background:#1E1E1E;color:white" type="submit" class="btn my-4">{{ __('Sign in') }}</button>
                             </div>
                         </form>
                     </div>

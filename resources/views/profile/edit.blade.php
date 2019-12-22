@@ -8,6 +8,7 @@
     ])   
     <link href="{{ asset('css/profileCustom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/picUpdateCss.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/headingsCss.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     
     <div class="container-fluid mt--7">
@@ -36,15 +37,15 @@
                             <div class="col">
                                 <div class="card-profile-stats d-flex justify-content-center mt-md-5">
                                     <div>
-                                        <span class="heading">22</span>
+                                        <span style="color:#FF9000" class="heading">22</span>
                                         <span class="description">{{ __('Friends') }}</span>
                                     </div>
                                     <div>
-                                        <span class="heading">10</span>
+                                        <span style="color:#FF9000"  class="heading">10</span>
                                         <span class="description">{{ __('Photos') }}</span>
                                     </div>
                                     <div>
-                                        <span class="heading">89</span>
+                                        <span style="color:#FF9000"  class="heading">89</span>
                                         <span class="description">{{ __('Comments') }}</span>
                                     </div>
                                 </div>
@@ -65,7 +66,7 @@
                             </div>
                             <hr class="my-4" />
                             <p>{{ __('Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.') }}</p>
-                            <a href="#">{{ __('Show more') }}</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -77,7 +78,7 @@
                    
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
+                            <h3 style="color:#1E1E1E" class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
@@ -86,7 +87,7 @@
                             @method('put')
                             
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
+                            <h6 class="greyheading heading-small mb-4">{{ __('User information') }}</h6>
                             
                             @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -120,7 +121,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button style="background:#1E1E1E;color:white"  type="submit" class="btn mt-4">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>
@@ -167,7 +168,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Change password') }}</button>
+                                    <button style="background:#1E1E1E;color:white" type="submit" class="btn mt-4">{{ __('Change password') }}</button>
                                 </div>
                             </div>
                         </form>
