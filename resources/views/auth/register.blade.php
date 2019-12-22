@@ -20,7 +20,7 @@
         <div class="row justify-content-center">
            
            
-            <div class="registerForm registerCard col-lg-6 col-md-8">
+            <div class="registerForm col-lg-6 col-md-8 col-xs-10">
                 
                 <div class="card bg-secondary shadow border-0">
                    
@@ -32,7 +32,8 @@
                 </div>
                 </div>
                 <div class="avatar-edit">
-                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                       
+                        <input class ="fas fa-pencil" type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
                                     <label for="imageUpload"></label>
                 </div>
             </div>   

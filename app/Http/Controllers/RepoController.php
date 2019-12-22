@@ -11,7 +11,16 @@ use App\Git;
 
 class RepoController extends Controller
 {
-
+   
+    // function __construct()
+    // {
+    //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
+    //      					['only' => ['index','show']]);
+    //      $this->middleware('permission:repository-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:repository-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
+    // }
+  
     // function __construct()
     // {
     //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
@@ -170,11 +179,11 @@ class RepoController extends Controller
     */
 
     public function store(Request $request)
-    {
+    { 
 
         $repoName = $request['repoName'];
 
-        switch ($request['submit']) {
+        switch ($request['submit']){
 
             case 'new':
 
@@ -182,16 +191,16 @@ class RepoController extends Controller
                     'user_id' => $user->id,
                     'name' => $repoName,
                     'description' => $request['repoDesc'],
-                ]);
+                    ]);
                 User::findOrFail(Auth::user()->id)->repos()->save($repo);
 
                 if ($request->has('readme')) {
 
-                    Storage::put('repos/clones/' . $repoName . '/README.md', 'This is a readme file.');
+                    Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
                 }
                 if ($request->has('gitignore')) {
 
-                    Storage::put('repos/clones/' . $repoName . '/.gitignore', '');
+                    Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
                 }
 
                 return redirect(route('repo.view', [Auth::user()->name, $repoName]));
@@ -200,15 +209,12 @@ class RepoController extends Controller
 
 
             case 'import':
-
-                if (!Git::cloneRemote($name)) {
-
+                if (!Git::cloneRemote($name)){
                     return 'ERROR: git clone error';
                 }
 
                 return redirect(route('repo.view', [Auth::user()->name, $name]));
-
-                break;
+                break;  
         }
     }
 
@@ -257,19 +263,16 @@ class RepoController extends Controller
 
     public function commit_index()
     {
-
         return view('repo.commits.index');
     }
 
     public function commit_show()
     {
-
         return view('repo.commits.show');
     }
 
     public function commit_create()
     {
-
         return view('repo.commits.create');
     }
 
@@ -286,7 +289,6 @@ class RepoController extends Controller
 
     public function stars($repoName)
     {
-
         $repo = Repository::whereName($repoName)->firstOrFail();
 
         return view('repo.stars.index', compact('repo'));
