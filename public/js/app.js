@@ -1939,6 +1939,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     'errors': {
@@ -1946,6 +1967,58 @@ __webpack_require__.r(__webpack_exports__);
     },
     'old': {
       required: true
+    }
+  },
+  data: function data() {
+    return {
+      value: '',
+      password: '',
+      confirmPwd: '',
+      pwdStrengthClass: '',
+      pwdConfirmClassWhichConfirmsPassword: ''
+    };
+  },
+  computed: {
+    pwdStrength: function pwdStrength() {
+      if (this.password == '') {
+        this.pwdStrengthClass = 'text-info';
+        return 'Enter password';
+      } else if (this.password.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{16,})')) {
+        this.pwdStrengthClass = 'text-success';
+        return 'Very Strong';
+      } else if (this.password.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{12,})')) {
+        this.pwdStrengthClass = 'text-success';
+        return 'Strong';
+      } else if (this.password.match('^(?=.*[a-z])(?=.*[A-Z])(?=.{8,})')) {
+        this.pwdStrengthClass = 'text-alert';
+        return 'Medium';
+      } else if (this.password.match('^(?=.*[a-z])(?=.{5,})')) {
+        this.pwdStrengthClass = 'text-danger';
+        return 'Weak';
+      } else {
+        this.pwdStrengthClass = 'text-danger';
+        return 'Very Weak';
+      }
+    },
+    confirmMsg: function confirmMsg() {
+      if (this.password.length < 8) {
+        this.pwdConfirmClassWhichConfirmsPassword = "invalid-feedback";
+        return '';
+      }
+
+      if (this.password == this.confirmPwd) {
+        this.pwdConfirmClassWhichConfirmsPassword = "valid-feedback";
+        return 'Passwords Match';
+      } else {
+        return 'Passwords do not match';
+      }
+    },
+    submitDisable: function submitDisable() {
+      if (this.password.length >= 8 && this.confirmPwd == this.password && this.name != '' && this.email != '') {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 });
@@ -37357,8 +37430,7 @@ var render = function() {
             name: "name",
             required: "",
             autofocus: ""
-          },
-          domProps: { value: _vm.old.name }
+          }
         })
       ]),
       _vm._v(" "),
@@ -37390,8 +37462,7 @@ var render = function() {
               name: "full_name",
               required: "",
               autofocus: ""
-            },
-            domProps: { value: _vm.old.name }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37423,8 +37494,7 @@ var render = function() {
               type: "email",
               name: "email",
               required: ""
-            },
-            domProps: { value: _vm.old.email }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37457,8 +37527,7 @@ var render = function() {
               name: "headline",
               required: "",
               autofocus: ""
-            },
-            domProps: { value: _vm.old.headline }
+            }
           })
         ]),
         _vm._v(" "),
@@ -37488,8 +37557,7 @@ var render = function() {
             name: "bio",
             required: "",
             autofocus: ""
-          },
-          domProps: { value: _vm.old.bio }
+          }
         })
       ]),
       _vm._v(" "),
@@ -37514,12 +37582,29 @@ var render = function() {
           _vm._m(5),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.password,
+                expression: "password"
+              }
+            ],
             class: ["form-control", _vm.errors.password ? " is-invalid" : ""],
             attrs: {
               placeholder: "Password",
               type: "password",
               name: "password",
               required: ""
+            },
+            domProps: { value: _vm.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.password = $event.target.value
+              }
             }
           })
         ]),
@@ -37538,13 +37623,68 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _vm._m(6),
+    _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "input-group input-group-alternative" }, [
+        _vm._m(6),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.confirmPwd,
+              expression: "confirmPwd"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            placeholder: "Confirm Password",
+            type: "password",
+            name: "password_confirmation",
+            required: ""
+          },
+          domProps: { value: _vm.confirmPwd },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.confirmPwd = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          class: _vm.pwdConfirmClassWhichConfirmsPassword,
+          staticStyle: { display: "block", margin: "10px 0 0 10px" },
+          attrs: { role: "alert" }
+        },
+        [_c("sub", [_vm._v(_vm._s(_vm.confirmMsg))])]
+      )
+    ]),
     _vm._v(" "),
-    _vm._m(7),
+    _c("div", { staticClass: "text-muted font-italic" }, [
+      _c("small", [
+        _vm._v("password strength: "),
+        _c("span", { class: [_vm.pwdStrengthClass, "font-weight-700"] }, [
+          _vm._v(_vm._s(_vm.pwdStrength))
+        ])
+      ])
+    ]),
     _vm._v(" "),
-    _vm._m(8),
-    _vm._v(" "),
-    _vm._m(9)
+    _c("div", { staticClass: "text-center" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mt-4",
+          attrs: { type: "submit", disabled: _vm.submitDisable }
+        },
+        [_vm._v("Create account")]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -37612,85 +37752,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "input-group input-group-alternative" }, [
-        _c("div", { staticClass: "input-group-prepend" }, [
-          _c("span", { staticClass: "input-group-text" }, [
-            _c("i", { staticClass: "ni ni-lock-circle-open" })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            placeholder: "Confirm Password",
-            type: "password",
-            name: "password_confirmation",
-            required: ""
-          }
-        })
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "ni ni-lock-circle-open" })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-muted font-italic" }, [
-      _c("small", [
-        _vm._v("password strength "),
-        _c("span", { staticClass: "text-success font-weight-700" }, [
-          _vm._v("strong")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row my-4" }, [
-      _c("div", { staticClass: "col-12" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "custom-control custom-control-alternative custom-checkbox"
-          },
-          [
-            _c("input", {
-              staticClass: "custom-control-input",
-              attrs: { id: "customCheckRegister", type: "checkbox" }
-            }),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "custom-control-label",
-                attrs: { for: "customCheckRegister" }
-              },
-              [
-                _c("span", { staticClass: "text-muted" }, [
-                  _vm._v("I agree with the"),
-                  _c("a", { attrs: { href: "#!" } }, [_vm._v("Privacy Policy")])
-                ])
-              ]
-            )
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary mt-4", attrs: { type: "submit" } },
-        [_vm._v("Create account")]
-      )
     ])
   }
 ]
