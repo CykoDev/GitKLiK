@@ -20,32 +20,32 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/repo', ['as'=> 'repo.index', 'uses' => 'RepoController@index']);
-Route::get('/repo/{userName}', ['as'=> 'repo.index.user', 'uses' => 'RepoController@index_user']);
-Route::get('/repo/{userName}/{repoName}', ['as'=> 'repo.show', 'uses' => 'RepoController@show']);
-Route::get('/repo/{userName}/{repoName}/stars', ['as'=> 'repo.stars', 'uses' => 'RepoController@stars']);
-Route::get('/repo/{userName}/{repoName}/commits', ['as'=> 'repo.commit.index', 'uses' => 'RepoController@commit_index']);
-Route::get('/repo/{userName}/{repoName}/commits/{commitCode}', ['as'=> 'repo.commit.show', 'uses' => 'RepoController@commit_show']);
-Route::get('/repo/{userName}/{repoName}/file', ['as'=> 'repo.file.show', 'uses' => 'RepoController@file_show']);
+Route::get('/repositories', ['as' => 'repo.index', 'uses' => 'RepoController@index']);
+Route::get('/{userName}/repositories', ['as' => 'repo.index.user', 'uses' => 'RepoController@index_user']);
+Route::get('/{userName}/repository/{repoName}', ['as' => 'repo.show', 'uses' => 'RepoController@show']);
+Route::get('/{userName}/repository/{repoName}/stars', ['as' => 'repo.stars', 'uses' => 'RepoController@stars']);
+Route::get('/{userName}/repository/{repoName}/commits', ['as' => 'repo.commit.index', 'uses' => 'RepoController@commit_index']);
+Route::get('/{userName}/repository/{repoName}/commits/{commitCode}', ['as' => 'repo.commit.show', 'uses' => 'RepoController@commit_show']);
+Route::get('/{userName}/repository/{repoName}/file', ['as' => 'repo.file.show', 'uses' => 'RepoController@file_show']);
 
-Route::group(['middleware' => 'verified'], function (){
+Route::group(['middleware' => 'verified'], function () {
 
-    Route::get('/repo/{userName}/create', ['as '=> 'repo.create', 'uses' => 'RepoController@create']);
-    Route::get('/repo/{userName}/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@create_import']);
-    Route::get('/repo/{userName}/{repoName}/edit', ['as'=> 'repo.edit', 'uses' => 'RepoController@edit']);
-    Route::get('/repo/{userName}/{repoName}/file/edit', ['as'=> 'repo.file.edit', 'uses' => 'RepoController@edit_file']);
+    Route::get('/repository/create', ['as' => 'repo.create', 'uses' => 'RepoController@create']);
+    Route::get('/repository/create/import', ['as' => 'repo.create.import', 'uses' => 'RepoController@create_import']);
+    Route::get('/{userName}/repository/{repoName}/edit', ['as' => 'repo.edit', 'uses' => 'RepoController@edit']);
+    Route::get('/{userName}/repository/{repoName}/file/edit', ['as' => 'repo.file.edit', 'uses' => 'RepoController@edit_file']);
 
-    Route::post('/repo/{userName}/{repoName}/create/dir', ['as' => 'repo.create.dir', 'uses' => 'RepoController@create_directory']);
-    Route::post('/repo/{userName}/{repoName}', ['as' => 'repo.store', 'uses' => 'RepoController@store']);
-    Route::post('/repo/{userName}/{repoName}/import', ['as'=> 'repo.store.import', 'uses' => 'RepoController@store_import']);
-    Route::post('/repo/{userName}/{repoName}/file', ['as'=> 'repo.file.update', 'uses' => 'RepoController@file_update']);
+    Route::post('/{userName}/repository/{repoName}/create/dir', ['as' => 'repo.create.dir', 'uses' => 'RepoController@create_directory']);
+    Route::post('/{userName}/repository/{repoName}', ['as' => 'repo.store', 'uses' => 'RepoController@store']);
+    Route::post('/repo/{userName}/{repoName}/import', ['as' => 'repo.store.import', 'uses' => 'RepoController@store_import']);
+    Route::post('{userName}/repository/{repoName}/file', ['as' => 'repo.file.update', 'uses' => 'RepoController@file_update']);
 
-    Route::put('/repo/{userName}/{repoName}/edit', ['as'=> 'repo.update', 'uses' => 'RepoController@update']);
-    Route::delete('/repo/{userName}/{repoName}', ['as'=> 'repo.destroy', 'uses' => 'RepoController@destroy']);
-    Route::delete('/repo/{userName}/{repoName}/file', ['as'=> 'repo.file.destroy', 'uses' => 'RepoController@destroy_file']);
+    Route::put('/{userName}/repository/{repoName}', ['as' => 'repo.update', 'uses' => 'RepoController@update']);
+    Route::delete('/profile', ['as' => 'repo.destroy', 'uses' => 'RepoController@destroy']);
+    Route::delete('/{userName}/repository/{repoName}', ['as' => 'repo.file.destroy', 'uses' => 'RepoController@destroy_file']);
 
-    Route::get('/repo/{userName}/{repoName}/commits/create', ['as'=> 'repo.commit.create', 'uses' => 'RepoController@commit_create']);
-    Route::post('/repo/{userName}/{repoName}/commits/store', ['as'=> 'repo.commit.store', 'uses' => 'RepoController@commit_store']);
+    Route::get('/{userName}/repository/{repoName}/commits/create', ['as' => 'repo.commit.create', 'uses' => 'RepoController@commit_create']);
+    Route::post('/{userName}/repository/{repoName}/commits', ['as' => 'repo.commit.store', 'uses' => 'RepoController@commit_store']);
 });
 
 
@@ -88,9 +88,8 @@ Route::group(['middleware' => 'verified'], function () {
 Route::group(['middleware' => 'verified'], function () {
 
     Route::get('/home',  ['as' => 'home', 'uses' => 'HomeController@index']);
-	Route::resource('roles','RoleController');
-	Route::resource('tags','TagController');
-
+    Route::resource('roles', 'RoleController');
+    Route::resource('tags', 'TagController');
 });
 
 
@@ -101,6 +100,17 @@ Route::group(['middleware' => 'verified'], function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/test/general', function() {
+Route::get('/test/general', function () {
     return view('errors.general');
 });
+
+
+Route::get('create/import', function () {
+return view("repos.create_import");
+});
+
+Route::get('create', function () {
+	return view("repos.create");
+	});
+
+
