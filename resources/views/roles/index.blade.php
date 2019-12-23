@@ -1,8 +1,10 @@
 @extends('layouts.app', ['title' => __('User Management')])
 
 @section('content')
+<link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
 
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header orangeGradient pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -103,10 +105,11 @@
                 <div class="card-header border-0">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h3 class="mb-0">{{ __('Tags') }}</h3>
+                            <h3 class="mb-0">{{ __('Roles') }}</h3>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">{{ __('Add Tags') }}</a>
+                            <a style="background:#1E1E1E;color:white;" href="{{ route('user.create') }}"
+                                class="btn btn-sm">{{ __('Add Roles') }}</a>
                         </div>
                     </div>
                 </div>
@@ -126,7 +129,7 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th scope="col">{{ __('Tag Name') }}</th>
+                                <th scope="col">{{ __('Role Name') }}</th>
                                 <th scope="col">{{ __('Description') }}</th>
                                 <th scope="col">{{ __('Creation Date') }}</th>
                                 <th scope="col"></th>
@@ -137,14 +140,15 @@
                             <!---------------------------------------------Listings end----------------------------------------------->
 
                             <tr>
-                                <td>"Tag Name"</td>
+                                <td>"Role Name"</td>
                                 <td>
                                     Description
                                 </td>
                                 <td> Date</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -153,12 +157,16 @@
                                                 @csrf
                                                 @method('delete')
 
-                                                <a class="dropdown-item" href="#" </a> <button type="button" class="text-center dropdown-item" onclick="confirm('{{ __(" Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    
-                                                  
-                                                        <a class=" text-center dropdown-item" data-toggle="modal" data-target="#myModal" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
+                                                <a class="dropdown-item" href="#" </a> <button type="button"
+                                                    class="text-center dropdown-item"
+                                                    onclick="confirm('{{ __(" Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                    {{ __('Delete') }}
+                                                    </button>
+                                            </form>
+
+                                            <a class=" text-center dropdown-item" data-toggle="modal"
+                                                data-target="#myModal"
+                                                href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
 
                                         </div>
                                     </div>
@@ -167,14 +175,15 @@
 
 
                             <tr>
-                                <td>"Tag Name"</td>
+                                <td>"Role Name"</td>
                                 <td>
                                     Description
                                 </td>
                                 <td> Date</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -183,12 +192,16 @@
                                                 @csrf
                                                 @method('delete')
 
-                                                <a class="dropdown-item" href="#" </a> <button type="button" class="text-center dropdown-item" onclick="confirm('{{ __(" Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    
-                                                  
-                                                        <a class=" text-center dropdown-item" data-toggle="modal" data-target="#myModal" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
+                                                <a class="dropdown-item" href="#" </a> <button type="button"
+                                                    class="text-center dropdown-item"
+                                                    onclick="confirm('{{ __(" Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                    {{ __('Delete') }}
+                                                    </button>
+                                            </form>
+
+                                            <a class=" text-center dropdown-item" data-toggle="modal"
+                                                data-target="#myModal"
+                                                href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
 
                                         </div>
                                     </div>
@@ -197,14 +210,15 @@
 
 
                             <tr>
-                                <td>"Tag Name"</td>
+                                <td>"Role Name"</td>
                                 <td>
                                     Description
                                 </td>
                                 <td> Date</td>
                                 <td class="text-right">
                                     <div class="dropdown">
-                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="btn btn-sm btn-icon-only text-light" href="#" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -213,12 +227,16 @@
                                                 @csrf
                                                 @method('delete')
 
-                                                <a class="dropdown-item" href="#" </a> <button type="button" class=" text-center dropdown-item" onclick="confirm('{{ __(" Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
-                                                                {{ __('Delete') }}
-                                                            </button>
-                                                        </form>    
-                                                  
-                                                        <a class=" text-center dropdown-item" data-toggle="modal" data-target="#myModal" href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
+                                                <a class="dropdown-item" href="#" </a> <button type="button"
+                                                    class=" text-center dropdown-item"
+                                                    onclick="confirm('{{ __(" Are you sure you want to delete this user?") }}') ? this.parentElement.submit() : ''">
+                                                    {{ __('Delete') }}
+                                                    </button>
+                                            </form>
+
+                                            <a class=" text-center dropdown-item" data-toggle="modal"
+                                                data-target="#myModal"
+                                                href="{{ route('profile.edit') }}">{{ __('Edit') }}</a>
 
                                         </div>
                                     </div>
@@ -251,14 +269,17 @@
                                     <div class="modal-body">
 
 
-                                        <input type="text" placeholder="Tag Name" class="form-control form-control-alternative">
+                                        <input type="text" placeholder="Role Name"
+                                            class="form-control form-control-alternative">
                                         <br>
-                                        <input type="text" placeholder="Description" class="form-control form-control-alternative">
+                                        <input type="text" placeholder="Description"
+                                            class="form-control form-control-alternative">
 
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-outline-secondary"
+                                            data-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-success">Save</button>
                                     </div>
                                 </form>
