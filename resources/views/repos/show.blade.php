@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
-
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
+<div class="header orangeGradient pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
             <div class="row">
@@ -125,7 +126,7 @@
                             </h3>
                         </div>
                         <div class="col text-right">
-                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newFolderModal">New
+                            <button class="btn btn-sm btn-grey" data-toggle="modal" data-target="#newFolderModal">New
                                 Folder</button>
                         </div>
                         <div class="modal fade" id="newFolderModal" tabindex="-1" role="dialog"
@@ -153,9 +154,9 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-grey"
                                             data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Create Folder</button>
+                                        <button type="submit" class="btn btn-orange">Create Folder</button>
                                         </form>
                                     </div>
                                 </div>

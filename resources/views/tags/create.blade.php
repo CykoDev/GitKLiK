@@ -6,12 +6,14 @@
 
 <link href="{{ asset('css/plusButton.css') }}" rel="stylesheet">
 
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
+
 <div class="container-fluid mt--7">
     <div style="justify-content:center" class="row">
-        <div class="col-xl-10 order-xl-1">
+        <div class="col-xl-10 order-xl-1">    
 
             <div>
-                <div style="margin-top:5%" class="card">
+                <div style="margin-top:5%" class="bg-secondary card">
                     <div class="card-body">
                         <form method="post" action="{{ route('user.store') }}" autocomplete="off">
                             @csrf
@@ -54,14 +56,14 @@
                 <br>
                 <div style="margin:auto; justify-content:center" class="row">
 
-                    <button type="button" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-grey btn-circle"><i class="fa fa-plus"></i></button>
 
 
                 </div>
 
 
 
-                <div style="margin-top:5%" class="card">
+                <div style="margin-top:5%" class="bg-secondary card">
                     <div class="card-body">
                         <form method="post" action="{{ route('user.store') }}" autocomplete="off">
                             @csrf
@@ -104,7 +106,7 @@
                 <br>
                 <div style="margin:auto; justify-content:center" class="row">
 
-                    <button type="button" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-grey btn-circle"><i class="fa fa-plus"></i></button>
 
 
                 </div>
@@ -112,7 +114,7 @@
 
 
 
-                <div style="margin-top:5%" class="card">
+                <div style="margin-top:5%" class="bg-secondary card">
                     <div class="card-body">
                         <form method="post" action="{{ route('user.store') }}" autocomplete="off">
                             @csrf
@@ -156,14 +158,15 @@
 
                 <div style="margin:auto; justify-content:center" class="row">
 
-                    <button type="button" class="btn btn-success btn-circle"><i class="fa fa-plus"></i></button>
+                    <button type="button" class="btn btn-grey btn-circle"><i class="fa fa-plus"></i></button>
 
 
                 </div>
                 <br>
                 <div class="submit col-12">
-                    <button type="submit" class="btn btn-success">Save Tags</button>
+                    <button type="submit" class="btn btn-orange">Save Tags</button>
                 </div>
+                <br>
 
 
 

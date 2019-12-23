@@ -3,6 +3,8 @@
 @section('content')
     @include('users.partials.header', ['title' => __('Add User')])   
 
+<link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 order-xl-1">
@@ -13,7 +15,7 @@
                                 <h3 class="mb-0">{{ __('User Management') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('user.index') }}" class="btn btn-sm btn-primary">{{ __('Back to list') }}</a>
+                                <a href="{{ route('user.index') }}" class="btn btn-sm btn-grey">{{ __('Back to list') }}</a>
                             </div>
                         </div>
                     </div>
@@ -59,7 +61,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                    <button type="submit" class="btn btn-orange mt-4">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>

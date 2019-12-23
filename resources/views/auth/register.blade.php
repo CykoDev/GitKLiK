@@ -2,6 +2,7 @@
 
 @section('content')
 
+
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     @include('layouts.headers.guest')
 
@@ -55,34 +56,25 @@
             </div>
         </div>
 
-
-
-
-<script type="text/javascript">
-
-function readURL(input) {
-
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('#imagePreview').css('background-image', 'url('+e.target.result +')');
-            $('#imagePreview').hide();
-            $('#imagePreview').fadeIn(650);
-
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-$("#imageUpload").change(function() {
-    console.log("here");
-    readURL(this);
-});
-
-</script>
-@endsection
-
 <script src="{{asset('js/app.js')}}" defer></script>
 
+<script type="text/javascript">
+    function readURL(input) {
 
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
 
-
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function() {
+        console.log("here");
+        readURL(this);
+    });
+</script>
+@endsection

@@ -8,9 +8,10 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
+        <a class="navbar-brand" href="{{ route('home') }}">
+            <img style="max-height: 4rem" src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
         </a>
+        
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
@@ -54,12 +55,16 @@
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
             <!-- Collapse header -->
             <div class="navbar-collapse-header d-md-none">
+               
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
                             <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            
                         </a>
+                        
                     </div>
+                   
                     <div class="col-6 collapse-close">
                         <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
                             <span></span>
@@ -79,6 +84,8 @@
                     </div>
                 </div>
             </form>
+             <hr style="margin:0">
+            
             <!-- Navigation -->
             <ul class="navbar-nav">
                 <li class="nav-item">

@@ -8,7 +8,8 @@
     ])   
    
 	<link href="{{ asset('css/codeCss.css') }}" rel="stylesheet">
-    
+    <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
     <div class="container-fluid mt--7">
         <div class="row">
             
@@ -30,7 +31,7 @@
                         <div class="container" style="height:150vh">
                         <textarea style="height:90%;width:100%" data-readonly="true" data-editor="php" class="form-control" name="code">{!! $data !!}</textarea>
                         <div class="text-center">
-                        <a style="margin-top:2%" class="btn btn-primary" href="file/edit">Edit Code</a>
+                        <a style="margin-top:2%" class="btn btn-grey" href="file/edit">Edit Code</a>
                         </div>
                         @include('partials.disabled_editor')
                         </div>
