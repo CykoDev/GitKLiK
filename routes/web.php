@@ -36,7 +36,7 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/{userName}/repository/{repoName}/file/edit', ['as' => 'repo.file.edit', 'uses' => 'RepoController@edit_file']);
 
     Route::post('/{userName}/repository/{repoName}/create/dir', ['as' => 'repo.create.dir', 'uses' => 'RepoController@create_directory']);
-    Route::post('/{userName}/repository/{repoName}', ['as' => 'repo.store', 'uses' => 'RepoController@store']);
+    Route::post('/{userName}/repository', ['as' => 'repo.store', 'uses' => 'RepoController@store']);
     Route::post('/repo/{userName}/{repoName}/import', ['as' => 'repo.store.import', 'uses' => 'RepoController@store_import']);
     Route::post('{userName}/repository/{repoName}/file', ['as' => 'repo.file.update', 'uses' => 'RepoController@file_update']);
 
@@ -96,11 +96,9 @@ Route::get('/test/general', function () {
 
 
 Route::get('create/import', function () {
-return view("repos.create_import");
+    return view("repos.create_import");
 });
 
 Route::get('create', function () {
-	return view("repos.create");
-	});
-
-
+    return view("repos.create");
+});
