@@ -93,12 +93,15 @@ class RepoController extends Controller
 
     public function index(User $model)
     {
-        return view('repos.index');
+        $repos = Repository::all();
+        return view('repos.index', compact('repos'));
     }
 
     public function index_user(User $model)
     {
-        return view('repos.index_user');
+        $user = User::findOrFail(Auth::user()->id);
+        $repos = $user->repos;
+        return view('repos.index_user', compact('repos'));
     }
 
     public function show($userName, $repoPath)
