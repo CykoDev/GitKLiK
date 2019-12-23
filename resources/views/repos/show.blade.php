@@ -219,7 +219,7 @@
                                     $readme = true;
                                     @endphp
                                     @endif
-                                    <a href="#">
+                                    <a href="{{ $data['repoPath'].'||'.$key.'/file' }}">
                                         @if(strlen($key) > 20)
                                         {{ substr($key, 0, 17).'...' }}
                                         @else

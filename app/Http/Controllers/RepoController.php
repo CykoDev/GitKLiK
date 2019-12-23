@@ -11,7 +11,16 @@ use App\Git;
 
 class RepoController extends Controller
 {
-
+   
+    // function __construct()
+    // {
+    //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
+    //      					['only' => ['index','show']]);
+    //      $this->middleware('permission:repository-create', ['only' => ['create','store']]);
+    //      $this->middleware('permission:repository-edit', ['only' => ['edit','update']]);
+    //      $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
+    // }
+  
     // function __construct()
     // {
     //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
@@ -27,29 +36,51 @@ class RepoController extends Controller
         // return view('repos.edit');
     }
 
-    public function edit_file($path)
+    public function edit_file($userName, $repoPath)
     {
-        // return view('repos.edit');
+        $pathElements = explode('||', $repoPath);
+        $repoName = $pathElements[0];
+
+        $targetPath = $repoName;
+        for ($i = 1; $i < sizeof($pathElements); $i++) {
+            $targetPath = $targetPath . '\\' . $pathElements[$i];
+        }
+
+        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $data = [
+            'content' => Storage::get($relativeRepoPath),
+            'userName' => $userName,
+            'repoName' => $repoName,
+            'repoPath' => $repoPath,
+            'relPath' => $relativeRepoPath,
+        ];
+
+        return view('repos.files.edit', compact('data'));
     }
 
-    public function update(UserRequest $request, User  $user)
+    public function update(Request $request, User  $user)
     {
-
     }
 
-    public function file_update($path)
+    public function file_update(Request $request)
     {
+        Storage::put($request['relPath'], $request['code']);
+        $pathElements = explode('||', $request['repoPath']);
 
+        $targetPath = $pathElements[0];
+        for ($i = 1; $i < sizeof($pathElements) - 1; $i++) {
+            $targetPath = $targetPath . '||' . $pathElements[$i];
+        }
+
+        return redirect('/' . $request['userName'] . '/repository/' . $targetPath);
     }
 
     public function destroy(User  $user)
     {
-
     }
 
     public function destroy_file($path)
     {
-
     }
 
 
@@ -76,7 +107,7 @@ class RepoController extends Controller
 
         $targetPath = $repoName;
         for ($i = 1; $i < sizeof($pathElements); $i++) {
-            $targetPath = $targetPath.'\\'.$pathElements[$i];
+            $targetPath = $targetPath . '\\' . $pathElements[$i];
         }
 
         $user = User::whereName($userName)->first();
@@ -84,12 +115,12 @@ class RepoController extends Controller
         $stars = $repo->stars;
 
         $starUsers = [];
-        foreach($stars as $star) {
+        foreach ($stars as $star) {
             array_push($starUsers, $star->user);
         }
 
-        $absoluteRepoPath = storage_path().'\app\repos\clones\\'.$targetPath.'\\';
-        $relativeRepoPath = 'repos\clones\\'.$targetPath;
+        $absoluteRepoPath = storage_path() . '\app\repos\clones\\' . $targetPath . '\\';
+        $relativeRepoPath = 'repos\clones\\' . $targetPath;
         $pathSize = strlen($relativeRepoPath);
 
         $filePaths = Storage::files($relativeRepoPath);
@@ -124,9 +155,20 @@ class RepoController extends Controller
         return view('repos.show', compact('data'));
     }
 
-    public function file_show($path)
+    public function file_show($userName, $repoPath)
     {
+        $pathElements = explode('||', $repoPath);
+        $repoName = $pathElements[0];
 
+        $targetPath = $repoName;
+        for ($i = 1; $i < sizeof($pathElements); $i++) {
+            $targetPath = $targetPath . '\\' . $pathElements[$i];
+        }
+
+        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $data = Storage::get($relativeRepoPath);
+
+        return view('repos.files.show', compact('data'));
     }
 
 
@@ -137,7 +179,7 @@ class RepoController extends Controller
     */
 
     public function store(Request $request)
-    {
+    { 
 
         $repoName = $request['repoName'];
 
@@ -167,15 +209,12 @@ class RepoController extends Controller
 
 
             case 'import':
-
                 if (!Git::cloneRemote($name)){
-
                     return 'ERROR: git clone error';
                 }
 
                 return redirect(route('repo.view', [Auth::user()->name, $name]));
-
-                break;
+                break;  
         }
     }
 
@@ -186,15 +225,16 @@ class RepoController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function create_import($title){
+    public function create_import($title)
+    {
 
-        $absolutePath = storage_path().'\app\public\repos\remotes\\'.$title.'.git\\';
+        $absolutePath = storage_path() . '\app\public\repos\remotes\\' . $title . '.git\\';
         $data = [
             'title' => $title,
             'absolutePath' => $absolutePath,
         ];
 
-        if (!Git::initBare($title)){
+        if (!Git::initBare($title)) {
             return 'ERROR: git init bare error';
         }
 
@@ -203,13 +243,12 @@ class RepoController extends Controller
 
     public function create()
     {
-
         return view('repos.create');
     }
 
     public function create_directory(Request $request)
     {
-        $dir = $request['relPath'].'\\'.$request['dirName'];
+        $dir = $request['relPath'] . '\\' . $request['dirName'];
         Storage::makeDirectory($dir);
         return back();
     }
@@ -222,24 +261,23 @@ class RepoController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function commit_index(){
-
+    public function commit_index()
+    {
         return view('repo.commits.index');
     }
 
-    public function commit_show(){
-
+    public function commit_show()
+    {
         return view('repo.commits.show');
     }
 
-    public function commit_create(){
-
+    public function commit_create()
+    {
         return view('repo.commits.create');
     }
 
-    public function commit_store(){
-
-
+    public function commit_store()
+    {
     }
 
 
@@ -249,8 +287,8 @@ class RepoController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function stars($repoName){
-
+    public function stars($repoName)
+    {
         $repo = Repository::whereName($repoName)->firstOrFail();
 
         return view('repo.stars.index', compact('repo'));
