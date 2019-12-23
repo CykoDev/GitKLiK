@@ -53,6 +53,7 @@ class RepoController extends Controller
             'repoName' => $repoName,
             'repoPath' => $repoPath,
             'relPath' => $relativeRepoPath,
+            'fileName' => $pathElements[sizeof($pathElements) - 1],
         ];
 
         return view('repos.files.edit', compact('data'));
@@ -166,7 +167,11 @@ class RepoController extends Controller
         }
 
         $relativeRepoPath = 'repos\clones\\' . $targetPath;
-        $data = Storage::get($relativeRepoPath);
+        $data = [
+            'relPath' => Storage::get($relativeRepoPath),
+            'repoName' => $repoName,
+            'fileName' => $pathElements[sizeof($pathElements) - 1],
+        ];
 
         return view('repos.files.show', compact('data'));
     }
