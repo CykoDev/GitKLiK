@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            <img src="{{ asset('argon') }}/img/brand/black.png">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -27,8 +27,8 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('home') }}">
-                        <i class="ni ni-planet"></i>
-                        <span class="nav-link-inner--text">{{ __('Dashboard') }}</span>
+                        <i  class="ni ni-planet"></i>
+                        <span  class="nav-link-inner--text">{{ __('Dashboard') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -39,7 +39,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('login') }}">
-                        <i class="ni ni-key-25"></i>
+                        <i  class="ni ni-key-25"></i>
                         <span class="nav-link-inner--text">{{ __('Login') }}</span>
                     </a>
                 </li>

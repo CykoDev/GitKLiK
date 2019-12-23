@@ -6,8 +6,8 @@
             <div class="header-body text-center mt-7 mb-7">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 col-md-6">
-                        <h1 style="font-size:32px" class="text-white">{{ __('Welcome to Git Klik.') }}</h1>
-                        <p class="text-white">{{ __('A version control site for ddevelopers and open source development') }}</p>
+                        <img style="height:100px" src="{{ asset('argon') }}/img/brand/white.png" />
+                        <p style="font-size:18px;color:white">{{ __('A version control website for developers and open source development') }}</p>
                     </div>
                 </div>
             </div>
