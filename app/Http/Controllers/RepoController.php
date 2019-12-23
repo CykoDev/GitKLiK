@@ -11,7 +11,7 @@ use App\Git;
 
 class RepoController extends Controller
 {
-   
+
     // function __construct()
     // {
     //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
@@ -20,7 +20,7 @@ class RepoController extends Controller
     //      $this->middleware('permission:repository-edit', ['only' => ['edit','update']]);
     //      $this->middleware('permission:repository-delete', ['only' => ['destroy']]);
     // }
-  
+
     // function __construct()
     // {
     //      $this->middleware('permission:repository-list|repository-create|repository-edit|repository-delete',
@@ -53,6 +53,7 @@ class RepoController extends Controller
             'repoName' => $repoName,
             'repoPath' => $repoPath,
             'relPath' => $relativeRepoPath,
+            'fileName' => $pathElements[sizeof($pathElements) - 1],
         ];
 
         return view('repos.files.edit', compact('data'));
@@ -92,12 +93,15 @@ class RepoController extends Controller
 
     public function index(User $model)
     {
-        return view('repos.index');
+        $repos = Repository::all();
+        return view('repos.index', compact('repos'));
     }
 
     public function index_user(User $model)
     {
-        return view('repos.index_user');
+        $user = User::findOrFail(Auth::user()->id);
+        $repos = $user->repos;
+        return view('repos.index_user', compact('repos'));
     }
 
     public function show($userName, $repoPath)
@@ -166,7 +170,11 @@ class RepoController extends Controller
         }
 
         $relativeRepoPath = 'repos\clones\\' . $targetPath;
-        $data = Storage::get($relativeRepoPath);
+        $data = [
+            'relPath' => Storage::get($relativeRepoPath),
+            'repoName' => $repoName,
+            'fileName' => $pathElements[sizeof($pathElements) - 1],
+        ];
 
         return view('repos.files.show', compact('data'));
     }
@@ -179,11 +187,12 @@ class RepoController extends Controller
     */
 
     public function store(Request $request)
-    { 
+    {
 
         $repoName = $request['repoName'];
+        $user = Auth::user();
 
-        switch ($request['submit']){
+        switch ($request['submit']) {
 
             case 'new':
 
@@ -191,30 +200,30 @@ class RepoController extends Controller
                     'user_id' => $user->id,
                     'name' => $repoName,
                     'description' => $request['repoDesc'],
-                    ]);
-                User::findOrFail(Auth::user()->id)->repos()->save($repo);
+                ]);
+                User::findOrFail($user->id)->repos()->save($repo);
 
                 if ($request->has('readme')) {
 
-                    Storage::put('repos/clones/'.$repoName.'/README.md', 'This is a readme file.');
+                    Storage::put('repos/clones/' . $repoName . '/README.md', 'This is a readme file.');
                 }
                 if ($request->has('gitignore')) {
 
-                    Storage::put('repos/clones/'.$repoName.'/.gitignore', '');
+                    Storage::put('repos/clones/' . $repoName . '/.gitignore', '');
                 }
 
-                return redirect(route('repo.view', [Auth::user()->name, $repoName]));
+                return redirect(route('repo.show', [Auth::user()->name, $repoName]));
 
                 break;
 
 
             case 'import':
-                if (!Git::cloneRemote($name)){
+                if (!Git::cloneRemote($name)) {
                     return 'ERROR: git clone error';
                 }
 
-                return redirect(route('repo.view', [Auth::user()->name, $name]));
-                break;  
+                return redirect(route('repo.show', [Auth::user()->name, $name]));
+                break;
         }
     }
 
@@ -243,7 +252,8 @@ class RepoController extends Controller
 
     public function create()
     {
-        return view('repos.create');
+        $userName = Auth::user()->name;
+        return view('repos.create', compact('userName'));
     }
 
     public function create_directory(Request $request)
