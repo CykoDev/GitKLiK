@@ -1,0 +1,20 @@
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    padding: 0px 0px 0px 0px;
+    border-radius: 30px;
+    text-align: center;
+    font-size: 12px;
+    
+}
+.submit{
+    margin-top:5px ;
+    display: flex;
+    justify-content: center;
+}
+.cross{
+    margin-top:5px ;
+    display: flex;
+    justify-content: right;
+}

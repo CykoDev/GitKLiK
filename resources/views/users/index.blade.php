@@ -1,8 +1,11 @@
 @extends('layouts.app', ['title' => __('User Management')])
 
 @section('content')
+   
+   <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
     
-    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="header orangeGradient pb-8 pt-5 pt-md-8">
         <div class="container-fluid">
             <div class="header-body">
                 <!-- Card stats -->
@@ -106,7 +109,7 @@
                                 <h3 class="mb-0">{{ __('Users') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">{{ __('Add user') }}</a>
+                                <button href="{{ route('user.create') }}" class="btn btn-sm btn-grey">{{ __('Add user') }}</button>
                             </div>
                         </div>
                     </div>
