@@ -100,7 +100,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="navbar-examples">
+                        aria-expanded="false" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">{{ __('Repositories') }}</span>
                     </a>
@@ -115,6 +115,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('repo.index') }}">
                                     {{ __('All Repositories') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('user.index') }}">
+                                    {{ __('Users\' Repositories') }}
                                 </a>
                             </li>
                             <li class="nav-item">
