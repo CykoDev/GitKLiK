@@ -68,7 +68,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         // $request = app('request');
-        if (isset($data['file'])) {
+        if (isset($data['avatar'])) {
 
             // $filename = $file->getClientOriginalName();
             // $file->move('images', $name);
