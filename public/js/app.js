@@ -37679,7 +37679,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "btn btn-primary mt-4",
+          staticClass: "btn btn-grey mt-4",
           attrs: { type: "submit", disabled: _vm.submitDisable }
         },
         [_vm._v("Create account")]
