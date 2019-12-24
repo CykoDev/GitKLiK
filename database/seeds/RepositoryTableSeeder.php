@@ -13,6 +13,7 @@ class RepositoryTableSeeder extends Seeder
      */
     public function run()
     {
+
         Repository::truncate();
 
         Repository::create([
@@ -86,6 +87,7 @@ class RepositoryTableSeeder extends Seeder
 			'name'        => 'Particle Generator',
 			'description' => 'Generated Particles. They\'re colorful...that was my Final Year Project dont judge me.',
         ]);
+
 
     }
 }

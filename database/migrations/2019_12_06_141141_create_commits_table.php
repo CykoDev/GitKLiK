@@ -15,7 +15,7 @@ class CreateCommitsTable extends Migration
     {
         Schema::create('commits', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
-            $table->integer('repository_id')->unsigned()->index();
+            $table->unsignedBigInteger('repository_id');
             $table->integer('hex_code')->unique();
             $table->string('name');
             $table->string('branch');
@@ -24,10 +24,8 @@ class CreateCommitsTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('repository_id')
-                ->references('id')->on('repositories')
-                ->onDelete('cascade');
         });
+
     }
 
     /**

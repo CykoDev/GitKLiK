@@ -13,18 +13,15 @@ class CreateRepositoriesTable extends Migration
      */
     public function up()
     {
+
         Schema::create('repositories', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
-            $table->integer('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id');
             $table->string('name')->unique();
             $table->string('description', 5000)->nullable();
             $table->timestamps();
-
-
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
         });
+
     }
 
     /**

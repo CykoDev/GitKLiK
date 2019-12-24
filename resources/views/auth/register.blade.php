@@ -35,7 +35,7 @@
 
                     <p class="text-center text-muted mb-4">Sign Up</p>
 
-                    {!! Form::open(['method'=>'POST', 'route'=>'register', 'files'=>'true' ]) !!}
+                    {!! Form::open(['method'=>'POST', 'route'=>'register', 'files'=>'true' , 'autocomplete' => 'off']) !!}
                     {{-- <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf --}}
 
