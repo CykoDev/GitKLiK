@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 
 
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, SoftDeletes, HasRoles;
@@ -82,6 +83,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function photos(){
 
         return $this->morphMany('App\Photo', 'imageable');
+    }
+
+    public function profilePhoto(){
+
+        return $this->morphMany('App\Photo', 'imageable')->whereType('profilePhoto')->firstOrFail();
+    }
+
+    public function profileBanner()
+    {
+
+        return $this->morphMany('App\Photo', 'imageable')->whereType('profileBanner');
     }
 
 }

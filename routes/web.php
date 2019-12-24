@@ -49,6 +49,16 @@ Route::group(['middleware' => 'verified'], function () {
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('api/checkUsername/{username}', ['as' => 'api.checkUsername', 'uses' => 'ApiController@checkUsername']);
+Route::get('api/checkEmail/{email}', ['as' => 'api.checkEmail', 'uses' => 'ApiController@checkEmail']);
+
+
 
 /*
 |--------------------------------------------------------------------------

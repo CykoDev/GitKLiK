@@ -5,9 +5,9 @@
         'title' => __('Hello') . ' '. $data['user']->name,
         'description' => __('This is your profile page. You can see the progress you\'ve made with your work and manage your projects or assigned tasks'),
         'class' => 'col-lg-7'
-    ])   
+    ])
     <link href="{{ asset('css/profileCustom.css') }}" rel="stylesheet">
-    
+
 
     <div class="container-fluid mt--7">
         <div class="row">
@@ -17,7 +17,7 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img src="{{ asset('argon') }}/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="{{ Auth::user()->profilePhoto()->path }}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -69,11 +69,12 @@
             </div>
             <div class="col-xl-8 order-xl-1">
                 <div class=" cardContainer bg-secondary shadow">
-                   
-                   
+
+
                     <!-- ------------------------------Fuck here---------------------------------------------------- -->
+
                     <h1 class="greyheading headingProfileView font-weight-bold text-uppercase text-muted mb-0">Here are your stats</h1>
-                    
+                  
                      <div class="cardContainer">
                         <div class="container-fluid">
                             <div class="header">
@@ -167,11 +168,11 @@
                             </div>
                         </div>
                     </div>
-                
+
                 </div>
             </div>
         </div>
-        
+
         @include('layouts.footers.auth')
     </div>
 @endsection

@@ -1838,6 +1838,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1960,6 +1962,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     'errors': {
@@ -1975,14 +1989,75 @@ __webpack_require__.r(__webpack_exports__);
       password: '',
       confirmPwd: '',
       pwdStrengthClass: '',
-      pwdConfirmClassWhichConfirmsPassword: ''
+      pwdConfirmClassWhichConfirmsPassword: '',
+      statusUsername: '',
+      statusEmail: '',
+      username: '',
+      email: '',
+      nameIsAvailable: '',
+      EmailIsAvailable: ''
     };
   },
   computed: {
+    validEmail: function validEmail() {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(this.email) && this.EmailIsAvailable;
+    },
+    validName: function validName() {
+      return this.name != '' && this.nameIsAvailable;
+    },
+    validPwd: function validPwd() {
+      return this.password.length >= 8 && this.confirmPwd == this.password;
+    },
+    usernameAvaible: function usernameAvaible() {
+      var _this = this;
+
+      if (this.username == '') {
+        return '';
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkUsername/' + this.username).then(function (response) {
+        return _this.nameIsAvailable = response.data;
+      });
+
+      if (this.nameIsAvailable == true) {
+        this.statusUsername = 'valid-feedback';
+        return 'Username available';
+      } else {
+        this.statusUsername = 'invalid-feedback';
+        return 'Username aleady taken';
+      }
+    },
+    emailAvaible: function emailAvaible() {
+      var _this2 = this;
+
+      if (this.email == '') {
+        return '';
+      }
+
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (!re.test(this.email) && this.EmailIsAvailable) {
+        this.statusEmail = 'invalid-feedback';
+        return 'Invalid email';
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkEmail/' + this.email).then(function (response) {
+        return _this2.EmailIsAvailable = response.data;
+      });
+
+      if (this.EmailIsAvailable == true) {
+        this.statusEmail = 'valid-feedback';
+        return 'Email available';
+      } else {
+        this.statusEmail = 'invalid-feedback';
+        return 'Email aleady taken';
+      }
+    },
     pwdStrength: function pwdStrength() {
       if (this.password == '') {
         this.pwdStrengthClass = 'text-info';
-        return 'Enter password';
+        return '- - -';
       } else if (this.password.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{16,})')) {
         this.pwdStrengthClass = 'text-success';
         return 'Very Strong';
@@ -2001,7 +2076,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     confirmMsg: function confirmMsg() {
-      if (this.password.length < 8) {
+      if (this.password.length < 8 || this.confirmPwd.length == 0) {
         this.pwdConfirmClassWhichConfirmsPassword = "invalid-feedback";
         return '';
       }
@@ -2010,15 +2085,12 @@ __webpack_require__.r(__webpack_exports__);
         this.pwdConfirmClassWhichConfirmsPassword = "valid-feedback";
         return 'Passwords Match';
       } else {
+        this.pwdConfirmClassWhichConfirmsPassword = "invalid-feedback";
         return 'Passwords do not match';
       }
     },
     submitDisable: function submitDisable() {
-      if (this.password.length >= 8 && this.confirmPwd == this.password && this.name != '' && this.email != '') {
-        return false;
-      } else {
-        return true;
-      }
+      return !(this.validEmail && this.validName && this.validPwd);
     }
   }
 });
@@ -37423,6 +37495,14 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.username,
+              expression: "username"
+            }
+          ],
           class: [_vm.errors.name ? " is-invalid" : "", "form-control"],
           attrs: {
             placeholder: "Name",
@@ -37430,6 +37510,15 @@ var render = function() {
             name: "name",
             required: "",
             autofocus: ""
+          },
+          domProps: { value: _vm.username },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.username = $event.target.value
+            }
           }
         })
       ]),
@@ -37444,7 +37533,17 @@ var render = function() {
             },
             [_c("strong", [_vm._v(_vm._s(_vm.errors.name))])]
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          class: _vm.statusUsername,
+          staticStyle: { display: "block", margin: "10px 0 0 10px" },
+          attrs: { role: "alert" }
+        },
+        [_c("sub", [_vm._v(_vm._s(_vm.usernameAvaible))])]
+      )
     ]),
     _vm._v(" "),
     _c(
@@ -37456,13 +37555,7 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             class: ["form-control", _vm.errors.full_name ? " is-invalid" : ""],
-            attrs: {
-              placeholder: "Full Name",
-              type: "text",
-              name: "full_name",
-              required: "",
-              autofocus: ""
-            }
+            attrs: { placeholder: "Full Name", type: "text", name: "full_name" }
           })
         ]),
         _vm._v(" "),
@@ -37488,12 +37581,29 @@ var render = function() {
           _vm._m(2),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email"
+              }
+            ],
             class: ["form-control", _vm.errors.email ? " is-invalid" : ""],
             attrs: {
               placeholder: "Email",
               type: "email",
               name: "email",
               required: ""
+            },
+            domProps: { value: _vm.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
+              }
             }
           })
         ]),
@@ -37508,7 +37618,17 @@ var render = function() {
               },
               [_c("strong", [_vm._v(_vm._s(_vm.errors.email))])]
             )
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            class: _vm.statusEmail,
+            staticStyle: { display: "block", margin: "10px 0 0 10px" },
+            attrs: { role: "alert" }
+          },
+          [_c("sub", [_vm._v(_vm._s(_vm.emailAvaible))])]
+        )
       ]
     ),
     _vm._v(" "),
@@ -37521,13 +37641,7 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             class: ["form-control", _vm.errors.headline ? " is-invalid" : ""],
-            attrs: {
-              placeholder: "Headline",
-              type: "text",
-              name: "headline",
-              required: "",
-              autofocus: ""
-            }
+            attrs: { placeholder: "Headline", type: "text", name: "headline" }
           })
         ]),
         _vm._v(" "),
@@ -37551,13 +37665,8 @@ var render = function() {
         _vm._v(" "),
         _c("textarea", {
           class: ["form-control", _vm.errors.bio ? " is-invalid" : ""],
-          attrs: {
-            placeholder: "Bio",
-            type: "text",
-            name: "bio",
-            required: "",
-            autofocus: ""
-          }
+          staticStyle: { resize: "none" },
+          attrs: { rows: "5", placeholder: "Bio", type: "text", name: "bio" }
         })
       ]),
       _vm._v(" "),
@@ -37668,7 +37777,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "text-muted font-italic" }, [
       _c("small", [
-        _vm._v("password strength: "),
+        _vm._v("Password strength: "),
         _c("span", { class: [_vm.pwdStrengthClass, "font-weight-700"] }, [
           _vm._v(_vm._s(_vm.pwdStrength))
         ])
@@ -37733,9 +37842,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "ni ni-hat-3" })
-      ])
+      _c("span", { staticClass: "input-group-text" })
     ])
   },
   function() {
@@ -50071,8 +50178,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\GitKLiK\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\GitKLiK\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Xampp\htdocs\GitKLiK\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Xampp\htdocs\GitKLiK\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
