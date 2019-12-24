@@ -21,23 +21,25 @@
 
                 <div class="card-body px-lg-5 ">
 
-                    <p class="text-center text-muted mb-4">Sign Up</p>
-
-                    {{-- {!! Form::open(['method'=>'POST', 'route'=>'register', 'files'=>'true' ]) !!} --}}
-                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="picCard">
-                            <div class="avatar-upload">
-                                <div class="avatar-preview">
-                                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);"></div>
-                                </div>
-                                <div class="avatar-edit">
-                                    <input name='avatar' id="avatar" class ="fas fa-pencil" type='file' />
-                                    <label for="avatar"></label>
-                                </div>
+                    <div class="picCard">
+                        <div class="avatar-upload">
+                            <div class="avatar-preview">
+                                <div id="imagePreview" style="background-image: url({{ Storage::url('/images/defaultUser.png') }});"></div>
+                            </div>
+                            <div class="avatar-edit">
+                                <input name='avatar' id="avatar" class ="fas fa-pencil" type='file' />
+                                <label for="avatar"></label>
                             </div>
                         </div>
+                    </div>
+
+                    <p class="text-center text-muted mb-4">Sign Up</p>
+
+                    {!! Form::open(['method'=>'POST', 'route'=>'register', 'files'=>'true' ]) !!}
+                    {{-- <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                        @csrf --}}
+
+
 
                         <div id="register">
                             <register-page
@@ -71,7 +73,7 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-}
+
 $("#avatar").change(function() {
     console.log("here");
     readURL(this);

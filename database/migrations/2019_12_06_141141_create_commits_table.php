@@ -22,6 +22,11 @@ class CreateCommitsTable extends Migration
             $table->text('message')->nullable;
             $table->string('author');
             $table->timestamps();
+
+
+            $table->foreign('repository_id')
+                ->references('id')->on('repositories')
+                ->onDelete('cascade');
         });
     }
 

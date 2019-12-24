@@ -16,9 +16,9 @@ class RepositoryTableSeeder extends Seeder
         Repository::truncate();
 
         Repository::create([
-			'user_id'     => 1,
-			'name'        => 'PHP Login System',
-			'description' => 'Raw PHP+AJAX login and registration system',
+			'user_id'     => 9,
+			'name'        => 'KLiK',
+			'description' => 'Complete PHP Social Media Website',
         ]);
 
         Repository::create([
@@ -29,14 +29,14 @@ class RepositoryTableSeeder extends Seeder
 
         Repository::create([
 			'user_id'     => 2,
-			'name'        => 'Automatic Butt Scratcher in ML',
+			'name'        => 'Automatic Automation in ML',
 			'description' => 'Unsupervised Learning for unsupervised luxury. Use wherever you want.',
         ]);
 
         Repository::create([
 			'user_id'     => 5,
-			'name'        => 'My Dead Uncle\'s Will',
-			'description' => 'Please dont tell the police it wasnt my fault he was offering me candy.',
+			'name'        => 'Automatic Car washer',
+			'description' => 'this is a car washer which is automatic and is for a car which it washes',
         ]);
 
         Repository::create([
@@ -47,7 +47,7 @@ class RepositoryTableSeeder extends Seeder
 
         Repository::create([
 			'user_id'     => 8,
-			'name'        => 'Java tentacle generator',
+			'name'        => 'Java something generator',
 			'description' => 'Best for indoors fun with friends!!',
         ]);
 
@@ -71,20 +71,21 @@ class RepositoryTableSeeder extends Seeder
 
         Repository::create([
 			'user_id'     => 8,
-			'name'        => 'Why are you gay?',
-			'description' => 'Who said Im Gay - AI program for future brainwashing agendas.',
+			'name'        => 'programming simulator',
+			'description' => 'a program which makes you feel like a programmer just by looking at the screen',
         ]);
 
         Repository::create([
 			'user_id'     => 1,
-			'name'        => 'Toilet Paper Simulator',
-			'description' => 'App shows a toilet paper. Open it, look at it, marvel it, then use it to wipe. Super smooth experience. 10/10 dentists recommmended this product to kill yourself.',
+			'name'        => 'Unity Hoolala Game',
+			'description' => 'a game in unity made in unity for unity and by unity',
         ]);
 
         Repository::create([
 			'user_id'     => 8,
 			'name'        => 'Particle Generator',
-			'description' => 'Generated Particles. They\'re colorful...that was my Final Yead Project now fuck off.',
+			'description' => 'Generated Particles. They\'re colorful...that was my Final Year Project dont judge me.',
         ]);
+
     }
 }

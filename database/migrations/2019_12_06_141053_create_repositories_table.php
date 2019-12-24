@@ -19,6 +19,11 @@ class CreateRepositoriesTable extends Migration
             $table->string('name')->unique();
             $table->string('description', 5000)->nullable();
             $table->timestamps();
+
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 

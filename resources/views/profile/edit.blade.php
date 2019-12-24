@@ -66,7 +66,7 @@
                             </div>
                             <hr class="my-4" />
                             <p>{{ __('Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.') }}</p>
-                            
+
                         </div>
                     </div>
                 </div>
