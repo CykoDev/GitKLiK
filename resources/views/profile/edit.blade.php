@@ -5,17 +5,17 @@
         'title' => __('Hello') . ' '. auth()->user()->name,
         'description' => __('This is your profile page. You can see the progress you\'ve made with your work and manage your projects or assigned tasks'),
         'class' => 'col-lg-7'
-    ])   
+    ])
     <link href="{{ asset('css/profileCustom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/picUpdateCss.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
                 <div class="card card-profile shadow">
                     <div class="row justify-content-center">
-                       
+
                         <div class="picCard">
                             <div class="avatar-upload">
                                 <div class="avatar-edit">
@@ -23,14 +23,14 @@
                                     <label for="imageUpload"></label>
                                 </div>
                                 <div class="avatar-preview">
-                                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                    <div id="imagePreview" style="background-image: url({{ Auth::user()->profilePhoto()->path }});">
                                     </div>
                                 </div>
-                            </div>   
+                            </div>
                         </div>
-                        
+
                     </div>
-                    
+
                     <div class="card-body">
                         <div class="info-sm row">
                             <div class="col">
@@ -72,9 +72,9 @@
             </div>
             <div class="cardContainer col-xl-8 order-xl-1">
                 <div class=" card bg-secondary shadow">
-                   
-                   
-                   
+
+
+
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <h3 class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
@@ -84,10 +84,10 @@
                         <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
                             @csrf
                             @method('put')
-                            
+
 
                             <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
-                            
+
                             @if (session('status'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('status') }}
@@ -144,7 +144,7 @@
                                 <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-current-password">{{ __('Current Password') }}</label>
                                     <input type="password" name="old_password" id="input-current-password" class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
-                                    
+
                                     @if ($errors->has('old_password'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('old_password') }}</strong>
@@ -154,7 +154,7 @@
                                 <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-password">{{ __('New Password') }}</label>
                                     <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
-                                    
+
                                     @if ($errors->has('password'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('password') }}</strong>
@@ -175,22 +175,22 @@
                 </div>
             </div>
         </div>
-        
+
         @include('layouts.footers.auth')
     </div>
-    
-    
+
+
 <script type="text/javascript">
 
 function readURL(input) {
-     
+
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
             $('#imagePreview').css('background-image', 'url('+e.target.result +')');
             $('#imagePreview').hide();
             $('#imagePreview').fadeIn(650);
-           
+
         }
         reader.readAsDataURL(input.files[0]);
     }
