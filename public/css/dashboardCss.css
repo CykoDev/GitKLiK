@@ -1,0 +1,13 @@
+.orangeGradient{
+background-color:#ff4e00;
+background-image:linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+    
+    
+}
+
+.welcomegradient{
+    background-image: radial-gradient( circle 621px at 25.3% 13.8%,  rgba(255,255,255,1) 0%, rgba(234,236,255,1) 90% );
+}
+
+
+

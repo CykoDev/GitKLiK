@@ -1,8 +1,10 @@
 @extends('layouts.app', ['title' => __('User Management')])
 
 @section('content')
+<link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
 
-<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+<div class="header orangeGradient pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -106,7 +108,7 @@
                             <h3 class="mb-0">{{ __('Tags') }}</h3>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">{{ __('Add Tags') }}</a>
+                            <a style="background:#1E1E1E;color:white;" href="{{ route('user.create') }}" class="btn btn-sm">{{ __('Add Tags') }}</a>
                         </div>
                     </div>
                 </div>
@@ -258,8 +260,8 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success">Save</button>
+                                        <button type="button" class="btn btn-grey" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-orange">Save</button>
                                     </div>
                                 </form>
                             </div>

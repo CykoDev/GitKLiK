@@ -24,8 +24,8 @@
                     </div>
                     <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                         <div class="d-flex justify-content-between">
-                            <a href="#" class="btn btn-sm btn-info mr-4">{{ __('Connect') }}</a>
-                            <a href="#" class="btn btn-sm btn-default float-right">{{ __('Message') }}</a>
+                            <a style="background:#1E1E1E;color:white" href="#" class="btn btn-sm mr-4">{{ __('Connect') }}</a>
+                            <a style="background:#1E1E1E;color:white" href="#" class="btn btn-sm float-right">{{ __('Message') }}</a>
                         </div>
                     </div>
                     <div class="card-body pt-0 pt-md-4">
@@ -62,7 +62,7 @@
                             </div>
                             <hr class="my-4" />
                             <p>{{ __('Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.') }}</p>
-                            <a class="btn btn-primary btn-sm" href="#">{{ __('Edit Profile') }}</a>
+                            <a style="background:#FF9000;color:white" class="btn  btn-sm" href="#">{{ __('Edit Profile') }}</a>
                         </div>
                     </div>
                 </div>
@@ -72,8 +72,9 @@
 
 
                     <!-- ------------------------------Fuck here---------------------------------------------------- -->
-                    <h1 class="headingProfileView font-weight-bold text-uppercase text-muted mb-0">Seem's like things are working!</h1>
 
+                    <h1 class="greyheading headingProfileView font-weight-bold text-uppercase text-muted mb-0">Here are your stats</h1>
+                  
                      <div class="cardContainer">
                         <div class="container-fluid">
                             <div class="header">
