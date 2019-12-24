@@ -46,7 +46,7 @@ class RepoController extends Controller
             $targetPath = $targetPath . '\\' . $pathElements[$i];
         }
 
-        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $relativeRepoPath = 'public\repos\clones\\' . $targetPath;
         $data = [
             'content' => Storage::get($relativeRepoPath),
             'userName' => $userName,
@@ -123,8 +123,8 @@ class RepoController extends Controller
             array_push($starUsers, $star->user);
         }
 
-        $absoluteRepoPath = storage_path() . '\app\repos\clones\\' . $targetPath . '\\';
-        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $absoluteRepoPath = storage_path() . '\app\public\repos\clones\\' . $targetPath . '\\';
+        $relativeRepoPath = 'public\repos\clones\\' . $targetPath;
         $pathSize = strlen($relativeRepoPath);
 
         $filePaths = Storage::files($relativeRepoPath);
@@ -169,7 +169,7 @@ class RepoController extends Controller
             $targetPath = $targetPath . '\\' . $pathElements[$i];
         }
 
-        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $relativeRepoPath = 'public\repos\clones\\' . $targetPath;
         $data = [
             'relPath' => Storage::get($relativeRepoPath),
             'repoName' => $repoName,
@@ -205,11 +205,11 @@ class RepoController extends Controller
 
                 if ($request->has('readme')) {
 
-                    Storage::put('repos/clones/' . $repoName . '/README.md', 'This is a readme file.');
+                    Storage::put('public/repos/clones/' . $repoName . '/README.md', 'This is a readme file.');
                 }
                 if ($request->has('gitignore')) {
 
-                    Storage::put('repos/clones/' . $repoName . '/.gitignore', '');
+                    Storage::put('public/repos/clones/' . $repoName . '/.gitignore', '');
                 }
 
                 return redirect(route('repo.show', [Auth::user()->name, $repoName]));
