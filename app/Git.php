@@ -13,7 +13,7 @@ class Git extends Model
 
         $gitPath = $repoPath . '\.git';
         $str = shell_exec("git --git-dir=" . $gitPath . " log --pretty=format:%H/#-%an/#-%ar/#-%s -n 1 -- " . $dir);
-        
+
         if (strlen($str) == 0) {
 
             return [
@@ -56,8 +56,9 @@ class Git extends Model
         Storage::makeDirectory('/public/repos/clones/'.$name);
 
         $absolutePath = storage_path().'\app\public\repos\remotes\\'.$name.'.git\\';
+        $absolutePath2 = storage_path() . '\app\public\repos\clones\\' . $name;
 
-        shell_exec('git clone '.$absolutePath.' '.$name);
+        shell_exec('git clone '.$absolutePath. ' '. $absolutePath2);
         shell_exec('touch post-receive');
         shell_exec('chmod +x post-receive');
         shell_exec('cd '.$absolutePath);

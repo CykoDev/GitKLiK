@@ -1838,6 +1838,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1960,6 +1962,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     'errors': {
@@ -1975,14 +1989,75 @@ __webpack_require__.r(__webpack_exports__);
       password: '',
       confirmPwd: '',
       pwdStrengthClass: '',
-      pwdConfirmClassWhichConfirmsPassword: ''
+      pwdConfirmClassWhichConfirmsPassword: '',
+      statusUsername: '',
+      statusEmail: '',
+      username: '',
+      email: '',
+      nameIsAvailable: '',
+      EmailIsAvailable: ''
     };
   },
   computed: {
+    validEmail: function validEmail() {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(this.email) && this.EmailIsAvailable;
+    },
+    validName: function validName() {
+      return this.name != '' && this.nameIsAvailable;
+    },
+    validPwd: function validPwd() {
+      return this.password.length >= 8 && this.confirmPwd == this.password;
+    },
+    usernameAvaible: function usernameAvaible() {
+      var _this = this;
+
+      if (this.username == '') {
+        return '';
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkUsername/' + this.username).then(function (response) {
+        return _this.nameIsAvailable = response.data;
+      });
+
+      if (this.nameIsAvailable == true) {
+        this.statusUsername = 'valid-feedback';
+        return 'Username available';
+      } else {
+        this.statusUsername = 'invalid-feedback';
+        return 'Username aleady taken';
+      }
+    },
+    emailAvaible: function emailAvaible() {
+      var _this2 = this;
+
+      if (this.email == '') {
+        return '';
+      }
+
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (!re.test(this.email) && this.EmailIsAvailable) {
+        this.statusEmail = 'invalid-feedback';
+        return 'Invalid email';
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkEmail/' + this.email).then(function (response) {
+        return _this2.EmailIsAvailable = response.data;
+      });
+
+      if (this.EmailIsAvailable == true) {
+        this.statusEmail = 'valid-feedback';
+        return 'Email available';
+      } else {
+        this.statusEmail = 'invalid-feedback';
+        return 'Email aleady taken';
+      }
+    },
     pwdStrength: function pwdStrength() {
       if (this.password == '') {
         this.pwdStrengthClass = 'text-info';
-        return 'Enter password';
+        return '- - -';
       } else if (this.password.match('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{16,})')) {
         this.pwdStrengthClass = 'text-success';
         return 'Very Strong';
@@ -2001,7 +2076,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     confirmMsg: function confirmMsg() {
-      if (this.password.length < 8) {
+      if (this.password.length < 8 || this.confirmPwd.length == 0) {
         this.pwdConfirmClassWhichConfirmsPassword = "invalid-feedback";
         return '';
       }
@@ -2010,15 +2085,12 @@ __webpack_require__.r(__webpack_exports__);
         this.pwdConfirmClassWhichConfirmsPassword = "valid-feedback";
         return 'Passwords Match';
       } else {
+        this.pwdConfirmClassWhichConfirmsPassword = "invalid-feedback";
         return 'Passwords do not match';
       }
     },
     submitDisable: function submitDisable() {
-      if (this.password.length >= 8 && this.confirmPwd == this.password && this.name != '' && this.email != '') {
-        return false;
-      } else {
-        return true;
-      }
+      return !(this.validEmail && this.validName && this.validPwd);
     }
   }
 });
@@ -37423,6 +37495,14 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.username,
+              expression: "username"
+            }
+          ],
           class: [_vm.errors.name ? " is-invalid" : "", "form-control"],
           attrs: {
             placeholder: "Name",
@@ -37430,6 +37510,15 @@ var render = function() {
             name: "name",
             required: "",
             autofocus: ""
+          },
+          domProps: { value: _vm.username },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.username = $event.target.value
+            }
           }
         })
       ]),
@@ -37444,7 +37533,17 @@ var render = function() {
             },
             [_c("strong", [_vm._v(_vm._s(_vm.errors.name))])]
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          class: _vm.statusUsername,
+          staticStyle: { display: "block", margin: "10px 0 0 10px" },
+          attrs: { role: "alert" }
+        },
+        [_c("sub", [_vm._v(_vm._s(_vm.usernameAvaible))])]
+      )
     ]),
     _vm._v(" "),
     _c(
@@ -37456,13 +37555,7 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             class: ["form-control", _vm.errors.full_name ? " is-invalid" : ""],
-            attrs: {
-              placeholder: "Full Name",
-              type: "text",
-              name: "full_name",
-              required: "",
-              autofocus: ""
-            }
+            attrs: { placeholder: "Full Name", type: "text", name: "full_name" }
           })
         ]),
         _vm._v(" "),
@@ -37488,12 +37581,29 @@ var render = function() {
           _vm._m(2),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.email,
+                expression: "email"
+              }
+            ],
             class: ["form-control", _vm.errors.email ? " is-invalid" : ""],
             attrs: {
               placeholder: "Email",
               type: "email",
               name: "email",
               required: ""
+            },
+            domProps: { value: _vm.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.email = $event.target.value
+              }
             }
           })
         ]),
@@ -37508,7 +37618,17 @@ var render = function() {
               },
               [_c("strong", [_vm._v(_vm._s(_vm.errors.email))])]
             )
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            class: _vm.statusEmail,
+            staticStyle: { display: "block", margin: "10px 0 0 10px" },
+            attrs: { role: "alert" }
+          },
+          [_c("sub", [_vm._v(_vm._s(_vm.emailAvaible))])]
+        )
       ]
     ),
     _vm._v(" "),
@@ -37521,13 +37641,7 @@ var render = function() {
           _vm._v(" "),
           _c("input", {
             class: ["form-control", _vm.errors.headline ? " is-invalid" : ""],
-            attrs: {
-              placeholder: "Headline",
-              type: "text",
-              name: "headline",
-              required: "",
-              autofocus: ""
-            }
+            attrs: { placeholder: "Headline", type: "text", name: "headline" }
           })
         ]),
         _vm._v(" "),
@@ -37551,13 +37665,8 @@ var render = function() {
         _vm._v(" "),
         _c("textarea", {
           class: ["form-control", _vm.errors.bio ? " is-invalid" : ""],
-          attrs: {
-            placeholder: "Bio",
-            type: "text",
-            name: "bio",
-            required: "",
-            autofocus: ""
-          }
+          staticStyle: { resize: "none" },
+          attrs: { rows: "5", placeholder: "Bio", type: "text", name: "bio" }
         })
       ]),
       _vm._v(" "),
@@ -37668,7 +37777,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "text-muted font-italic" }, [
       _c("small", [
-        _vm._v("password strength: "),
+        _vm._v("Password strength: "),
         _c("span", { class: [_vm.pwdStrengthClass, "font-weight-700"] }, [
           _vm._v(_vm._s(_vm.pwdStrength))
         ])
@@ -37733,9 +37842,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "ni ni-hat-3" })
-      ])
+      _c("span", { staticClass: "input-group-text" })
     ])
   },
   function() {
@@ -37881,7 +37988,7 @@ function normalizeComponent (
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.6.10
+ * Vue.js v2.6.11
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
  */
@@ -39847,7 +39954,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
   isUsingMicroTask = true;
 } else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   // Fallback to setImmediate.
-  // Techinically it leverages the (macro) task queue,
+  // Technically it leverages the (macro) task queue,
   // but it is still a better choice than setTimeout.
   timerFunc = function () {
     setImmediate(flushCallbacks);
@@ -39936,7 +40043,7 @@ var initProxy;
     warn(
       "Property \"" + key + "\" must be accessed with \"$data." + key + "\" because " +
       'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
-      'prevent conflicts with Vue internals' +
+      'prevent conflicts with Vue internals. ' +
       'See: https://vuejs.org/v2/api/#data',
       target
     );
@@ -40796,7 +40903,7 @@ function bindDynamicKeys (baseObj, values) {
     if (typeof key === 'string' && key) {
       baseObj[values[i]] = values[i + 1];
     } else if (key !== '' && key !== null) {
-      // null is a speical value for explicitly removing a binding
+      // null is a special value for explicitly removing a binding
       warn(
         ("Invalid value for dynamic directive argument (expected string or null): " + key),
         this
@@ -41291,6 +41398,12 @@ function _createElement (
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {
       // platform built-in elements
+      if (isDef(data) && isDef(data.nativeOn)) {
+        warn(
+          ("The .native modifier for v-on is only valid on components but it was used on <" + tag + ">."),
+          context
+        );
+      }
       vnode = new VNode(
         config.parsePlatformTagName(tag), data, children,
         undefined, undefined, context
@@ -41416,7 +41529,7 @@ function renderMixin (Vue) {
     // render self
     var vnode;
     try {
-      // There's no need to maintain a stack becaues all render fns are called
+      // There's no need to maintain a stack because all render fns are called
       // separately from one another. Nested component's render fns are called
       // when parent component is patched.
       currentRenderingInstance = vm;
@@ -43315,7 +43428,7 @@ Object.defineProperty(Vue, 'FunctionalRenderContext', {
   value: FunctionalRenderContext
 });
 
-Vue.version = '2.6.10';
+Vue.version = '2.6.11';
 
 /*  */
 
@@ -43988,7 +44101,7 @@ function createPatchFunction (backend) {
     }
   }
 
-  function removeVnodes (parentElm, vnodes, startIdx, endIdx) {
+  function removeVnodes (vnodes, startIdx, endIdx) {
     for (; startIdx <= endIdx; ++startIdx) {
       var ch = vnodes[startIdx];
       if (isDef(ch)) {
@@ -44099,7 +44212,7 @@ function createPatchFunction (backend) {
       refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
       addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
     } else if (newStartIdx > newEndIdx) {
-      removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx);
+      removeVnodes(oldCh, oldStartIdx, oldEndIdx);
     }
   }
 
@@ -44191,7 +44304,7 @@ function createPatchFunction (backend) {
         if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
       } else if (isDef(oldCh)) {
-        removeVnodes(elm, oldCh, 0, oldCh.length - 1);
+        removeVnodes(oldCh, 0, oldCh.length - 1);
       } else if (isDef(oldVnode.text)) {
         nodeOps.setTextContent(elm, '');
       }
@@ -44420,7 +44533,7 @@ function createPatchFunction (backend) {
 
         // destroy old node
         if (isDef(parentElm)) {
-          removeVnodes(parentElm, [oldVnode], 0, 0);
+          removeVnodes([oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
           invokeDestroyHook(oldVnode);
         }
@@ -47126,7 +47239,7 @@ var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
 var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
-// #7298: escape - to avoid being pased as HTML comment when inlined in page
+// #7298: escape - to avoid being passed as HTML comment when inlined in page
 var comment = /^<!\--/;
 var conditionalComment = /^<!\[/;
 
@@ -47411,7 +47524,7 @@ function parseHTML (html, options) {
 /*  */
 
 var onRE = /^@|^v-on:/;
-var dirRE = /^v-|^@|^:/;
+var dirRE = /^v-|^@|^:|^#/;
 var forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
 var stripParensRE = /^\(|\)$/g;
@@ -48035,7 +48148,7 @@ function processSlotContent (el) {
           if (el.parent && !maybeComponent(el.parent)) {
             warn$2(
               "<template v-slot> can only appear at the root level inside " +
-              "the receiving the component",
+              "the receiving component",
               el
             );
           }
@@ -48598,7 +48711,7 @@ function isDirectChildOfTemplateFor (node) {
 
 /*  */
 
-var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*(?:[\w$]+)?\s*\(/;
+var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function(?:\s+[\w$]+)?\s*\(/;
 var fnInvokeRE = /\([^)]*?\);*$/;
 var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
 
@@ -49367,6 +49480,8 @@ function checkNode (node, warn) {
           var range = node.rawAttrsMap[name];
           if (name === 'v-for') {
             checkFor(node, ("v-for=\"" + value + "\""), warn, range);
+          } else if (name === 'v-slot' || name[0] === '#') {
+            checkFunctionParameterExpression(value, (name + "=\"" + value + "\""), warn, range);
           } else if (onRE.test(name)) {
             checkEvent(value, (name + "=\"" + value + "\""), warn, range);
           } else {
@@ -49386,9 +49501,9 @@ function checkNode (node, warn) {
 }
 
 function checkEvent (exp, text, warn, range) {
-  var stipped = exp.replace(stripStringRE, '');
-  var keywordMatch = stipped.match(unaryOperatorsRE);
-  if (keywordMatch && stipped.charAt(keywordMatch.index - 1) !== '$') {
+  var stripped = exp.replace(stripStringRE, '');
+  var keywordMatch = stripped.match(unaryOperatorsRE);
+  if (keywordMatch && stripped.charAt(keywordMatch.index - 1) !== '$') {
     warn(
       "avoid using JavaScript unary operator as property name: " +
       "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim()),
@@ -49440,6 +49555,19 @@ function checkExpression (exp, text, warn, range) {
         range
       );
     }
+  }
+}
+
+function checkFunctionParameterExpression (exp, text, warn, range) {
+  try {
+    new Function(exp, '');
+  } catch (e) {
+    warn(
+      "invalid function parameter expression: " + (e.message) + " in\n\n" +
+      "    " + exp + "\n\n" +
+      "  Raw expression: " + (text.trim()) + "\n",
+      range
+    );
   }
 }
 
@@ -50071,8 +50199,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\GitKLiK\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\GitKLiK\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\Xampp\htdocs\GitKLiK\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\Xampp\htdocs\GitKLiK\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

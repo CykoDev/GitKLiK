@@ -11,7 +11,7 @@ Auth::routes(['verify' => true]);
 Route::get('/', function () {
 
     return view('welcome');
-});
+})->name('welcome');
 
 
 /*
@@ -47,6 +47,16 @@ Route::group(['middleware' => 'verified'], function () {
     Route::get('/{userName}/repository/{repoName}/commits/create', ['as' => 'repo.commit.create', 'uses' => 'RepoController@commit_create']);
     Route::post('/{userName}/repository/{repoName}/commits', ['as' => 'repo.commit.store', 'uses' => 'RepoController@commit_store']);
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('api/checkUsername/{username}', ['as' => 'api.checkUsername', 'uses' => 'ApiController@checkUsername']);
+Route::get('api/checkEmail/{email}', ['as' => 'api.checkEmail', 'uses' => 'ApiController@checkEmail']);
 
 
 

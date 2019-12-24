@@ -46,7 +46,7 @@ class RepoController extends Controller
             $targetPath = $targetPath . '\\' . $pathElements[$i];
         }
 
-        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $relativeRepoPath = 'public\repos\clones\\' . $targetPath;
         $data = [
             'content' => Storage::get($relativeRepoPath),
             'userName' => $userName,
@@ -97,9 +97,9 @@ class RepoController extends Controller
         return view('repos.index', compact('repos'));
     }
 
-    public function index_user(User $model)
+    public function index_user($userName)
     {
-        $user = User::findOrFail(Auth::user()->id);
+        $user = User::whereName($userName)->firstOrFail();
         $repos = $user->repos;
         return view('repos.index_user', compact('repos'));
     }
@@ -123,8 +123,8 @@ class RepoController extends Controller
             array_push($starUsers, $star->user);
         }
 
-        $absoluteRepoPath = storage_path() . '\app\repos\clones\\' . $targetPath . '\\';
-        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $absoluteRepoPath = storage_path() . '\app\public\repos\clones\\' . $targetPath . '\\';
+        $relativeRepoPath = 'public\repos\clones\\' . $targetPath;
         $pathSize = strlen($relativeRepoPath);
 
         $filePaths = Storage::files($relativeRepoPath);
@@ -169,7 +169,7 @@ class RepoController extends Controller
             $targetPath = $targetPath . '\\' . $pathElements[$i];
         }
 
-        $relativeRepoPath = 'repos\clones\\' . $targetPath;
+        $relativeRepoPath = 'public\repos\clones\\' . $targetPath;
         $data = [
             'relPath' => Storage::get($relativeRepoPath),
             'repoName' => $repoName,
@@ -205,24 +205,48 @@ class RepoController extends Controller
 
                 if ($request->has('readme')) {
 
-                    Storage::put('repos/clones/' . $repoName . '/README.md', 'This is a readme file.');
+                    Storage::put('public/repos/clones/' . $repoName . '/README.md', 'This is a readme file.');
                 }
                 if ($request->has('gitignore')) {
 
-                    Storage::put('repos/clones/' . $repoName . '/.gitignore', '');
+                    Storage::put('public/repos/clones/' . $repoName . '/.gitignore', '');
                 }
 
-                return redirect(route('repo.show', [Auth::user()->name, $repoName]));
+                return redirect(route('repo.show', [$user->name, $repoName]));
 
                 break;
 
 
             case 'import':
-                if (!Git::cloneRemote($name)) {
+
+                $repo = Repository::create([
+                    'user_id' => $user->id,
+                    'name' => $repoName,
+                    'description' => $request['repoDesc'],
+                ]);
+                User::findOrFail($user->id)->repos()->save($repo);
+
+
+                $absolutePath = storage_path() . '\app\public\repos\remotes\\' . $repoName . '.git\\';
+                $data = [
+                    'title' => $repoName,
+                    'absolutePath' => $absolutePath,
+                ];
+
+                if (!Git::initBare($repoName)) {
+                    return 'ERROR: git init bare error';
+                }
+
+                return view('repos.create_import', compact('data'));
+                break;
+
+            case 'importend':
+
+                if (!Git::cloneRemote($repoName)) {
                     return 'ERROR: git clone error';
                 }
 
-                return redirect(route('repo.show', [Auth::user()->name, $name]));
+                return redirect(route('repo.show', [$user->name, $repoName]));
                 break;
         }
     }

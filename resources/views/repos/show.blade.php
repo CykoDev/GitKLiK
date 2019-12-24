@@ -101,7 +101,7 @@
 $pathElements = $data['pathElements'];
 $size = sizeof($pathElements);
 $path = '';
-$href = '';
+$href = $pathElements[0];
 if ($size == 1) {
 $path = $pathElements[0];
 } else {

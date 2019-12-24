@@ -1,26 +1,25 @@
 <div class="row align-items-center justify-content-xl-between">
     <div class="col-xl-6">
+
         <div style="color:#CFCDCD" class="copyright text-center text-xl-left">
-            &copy; {{ now()->year }} <a style="color:#CFCDCD" href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a> &amp;
-            <a style="color:#CFCDCD" href="https://www.updivision.com" class="font-weight-bold ml-1" target="_blank">Updivision</a>
+            &copy; {{ now()->year }} <a href="gitklik.test" style="color:#CFCDCD" class="font-weight-bold ml-1" target="_blank">GitKLiK</a> &amp;
+            <a href="gitklik.test" style="color:#CFCDCD" class="font-weight-bold ml-1" target="_blank">KLiK</a>
         </div>
     </div>
     <div class="col-xl-6">
         <ul  class="nav nav-footer justify-content-center justify-content-xl-end">
             <li class="nav-item">
-                <a style="color:#CFCDCD"  href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+
+                <a  style="color:#CFCDCD" href="https://github.com/msaad1999" class="nav-link" target="_blank">Muhammad Saad</a>
             </li>
             <li class="nav-item">
-                <a style="color:#CFCDCD" href="https://www.updivision.com" class="nav-link" target="_blank">Updivision</a>
+                <a style="color:#CFCDCD" href="https://github.com/aitasadduq" class="nav-link" target="_blank">Anas Imran Tasadduq</a>
             </li>
             <li class="nav-item">
-                <a style="color:#CFCDCD" href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                <a style="color:#CFCDCD" href="https://github.com/UbaidAsim   " class="nav-link" target="_blank">Ubaid Asim</a>
             </li>
             <li class="nav-item">
-                <a style="color:#CFCDCD" href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
-            </li>
-            <li class="nav-item">
-                <a style="color:#CFCDCD" href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+                <a style="color:#CFCDCD" href="#" class="nav-link" target="_blank">MIT License</a>
             </li>
         </ul>
     </div>

@@ -6,6 +6,11 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+
+
+use App\Photo;
+use Image;
 
 class RegisterController extends Controller
 {
@@ -62,7 +67,28 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // $request = app('request');
+        if (isset($data['avatar'])) {
+
+            // $filename = $file->getClientOriginalName();
+            // $file->move('images', $name);
+
+            $avatar = $data['avatar'];
+            $filename = time() . '.' . $avatar->getClientOriginalExtension();
+
+            // $absolutePath = storage_path() . '\app\public\repos\remotes\\' . $title . '.git\\';
+            $img = Image::make($avatar->getRealPath());
+            $img->stream();
+
+            // Image::make($avatar)->save(storage_path('app\public\images\\' . $filename));
+            Storage::disk('local')->put('public/images/' . $filename, $img, 'public');
+        }
+        else {
+
+            $filename = 'defaultUser.png';
+        }
+
+        $user = User::create([
             'name'      => $data['name'],
             'email'     => $data['email'],
             'password'  => $data['password'],
@@ -70,5 +96,11 @@ class RegisterController extends Controller
             'headline'  => $data['headline'],
             'bio'       => $data['bio'],
         ]);
+        $user->photos()->save(Photo::create([
+            'path' => $filename,
+            'type' => 'profilePhoto',
+        ]));
+
+        return $user;
     }
 }

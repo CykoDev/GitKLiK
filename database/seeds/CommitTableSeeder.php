@@ -197,8 +197,8 @@ class CommitTableSeeder extends Seeder
 
         Commit::create([
 			'repository_id' => '12',
-			'hex_code'          => '446969699',
-			'name'          => 'fuck stackoverflow this is ruined',
+            'hex_code'      => '446969699',
+			'name'          => 'wth stackoverflow this is ruined',
 			'branch'        => 'master',
 			'message'       => '',
 			'author'        => 'supahot admin',
@@ -216,7 +216,7 @@ class CommitTableSeeder extends Seeder
         Commit::create([
 			'repository_id' => '6',
 			'hex_code'          => '696955699',
-			'name'          => 'imeplented some shit from google',
+			'name'          => 'imeplented something from google',
 			'branch'        => 'feature-chatbox',
 			'message'       => '',
 			'author'        => 'supahot admin',
