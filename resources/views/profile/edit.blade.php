@@ -87,7 +87,6 @@
                             @method('put')
 
 
-
                             <h6 class="greyheading heading-small mb-4">{{ __('User information') }}</h6>
 
                             @if (session('status'))

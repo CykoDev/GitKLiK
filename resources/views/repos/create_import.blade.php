@@ -29,7 +29,7 @@
 								 <code class="code">
 								 		cd &lt;your-app-folder&gt;<br>
                                         git init<br>
-                                        git remote add deploy {{ $data['absolutePath'] }}<br>
+                                        git remote add deploy "{{ $data['absolutePath'] }}"<br>
                                         <br>
                                         git add . <br>
                                         git commit -m "&lt;commit message&gt;"<br>
