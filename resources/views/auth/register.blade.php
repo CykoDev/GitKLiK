@@ -16,40 +16,41 @@
 
         <div class="row justify-content-center">
             <div class="registerForm col-lg-6 col-md-8 col-xs-10">
+
                 <div class="card bg-secondary shadow border-0">
 
+                <div class="card-body px-lg-5 ">
+
                     <div class="picCard">
-                <div class="avatar-upload">
+                        <div class="avatar-upload">
+                            <div class="avatar-preview">
+                                <div id="imagePreview" style="background-image: url({{ Storage::url('/images/defaultUser.png') }});"></div>
+                            </div>
+                            <div class="avatar-edit">
+                                <input name='avatar' id="avatar" class ="fas fa-pencil" type='file' />
+                                <label for="avatar"></label>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="avatar-preview">
-                    <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
-                </div>
-                </div>
-                <div class="avatar-edit">
-                
-                        <input class ="fas fa-pencil" type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                    <label for="imageUpload"></label>
-                </div>
-            </div>
-         </div>
+                    <p class="text-center text-muted mb-4">Sign Up</p>
 
-                    <div class="card-body px-lg-5 ">
+                    {!! Form::open(['method'=>'POST', 'route'=>'register', 'files'=>'true' ]) !!}
+                    {{-- <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                        @csrf --}}
 
-                        <p class="text-center text-muted mb-4">Sign Up</p>
 
-                        <form role="form" method="POST" action="{{ route('register') }}">
-                            @csrf
 
-        <div id="register">
+                        <div id="register">
+                            <register-page
+                                :errors="{{ $errors->toJson() }}"
+                                :old="{{ json_encode(Session::getOldInput()) }}"
+                            ></register-page>
+                        </div>
 
-        <register-page
-            :errors="{{ $errors->toJson() }}"
-            :old="{{ json_encode(Session::getOldInput()) }}"
-        ></register-page>
+                    {!! Form::close() !!}
 
-        </div>
 
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -72,9 +73,11 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $("#imageUpload").change(function() {
-        console.log("here");
-        readURL(this);
-    });
+
+$("#avatar").change(function() {
+    console.log("here");
+    readURL(this);
+});
+
 </script>
 @endsection

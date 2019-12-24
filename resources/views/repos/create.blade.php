@@ -28,6 +28,8 @@
 
                 <form method="POST" action="{{ '/'.$userName.'/repository' }}">
                     @csrf
+
+
                     <input type="text" name="repoName" placeholder="Repository Title"
                         class="form-control form-control-alternative">
                     <br>

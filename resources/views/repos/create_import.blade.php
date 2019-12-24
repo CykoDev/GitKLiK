@@ -5,49 +5,43 @@
         'title' => __('Import Repository'),
         'description' => __('Import an existing repository'),
         'class' => 'col-lg-7'
-    ])   
-   
+    ])
+
 	<link href="{{ asset('css/codeCss.css') }}" rel="stylesheet">
-    
+
     <div class="container-fluid mt--7">
         <div class="row">
-            
+
             <div class="cardContainer col-xl-12 order-xl-1">
                 <div class=" card bg-secondary shadow">
-                   
-                   
-                   
+
+
+
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
+                            <h3 class="col-12 mb-0">{{ __('Importing Repository: Instructions') }}</h3>
                         </div>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
-                    
-                        </form>
-
+                        <form method="post" action="{{ route('repo.store', ['userName'=>Auth::user()->name]) }}" autocomplete="off">
+                            @csrf
 								<div class="card">
 								 <code class="code">
-								 		#include <iostream> <br>
-										using namespace std; <br>
+								 		cd &lt;your-app-folder&gt;<br>
+                                        git init<br>
+                                        git remote add deploy {{ $data['absolutePath'] }}<br>
+                                        <br>
+                                        git add . <br>
+                                        git commit -m "&lt;commit message&gt;"<br>
+                                        git push deploy master
 
-										int main () <br>
-										{ <br>
-										/* local variable Initialization */   int n = 1,times=5; <br>
-										<br>
-										/* for loops execution */   for( n = 1; n <= times; n = n + 1 )<br>
-										{ <br>
-											cout << "C++ for loops: " << n <<endl; <br>
-										} <br>
-										return 0; <br>
-										} <br>
-								 
 								 </code>
-								</div>
-                                
+                                </div>
+
+                                <input type="hidden" value='{{ $data['title'] }}' name='repoName'>
+
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-success mt-4">{{ __('Import Repository') }}</button>
+                                    <button name='submit' value='importend' type="submit" class="btn btn-success mt-4">Import Repository</button>
                                 </div>
                             </div>
                         </form>
@@ -56,9 +50,9 @@
             </div>
             @include('layouts.footers.auth')
         </div>
-        
-        
-       
+
+
+
     </div>
-    
+
 @endsection

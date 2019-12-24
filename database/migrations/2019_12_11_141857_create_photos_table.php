@@ -17,7 +17,7 @@ class CreatePhotosTable extends Migration
             $table->bigIncrements('id')->unsigned()->index();
             $table->integer('imageable_id')->unsigned()->index()->nullable();
             $table->string('imageable_type')->nullable();
-            $table->string('path')->unique();
+            $table->string('path');
             $table->string('type')->nullable();
             $table->softDeletes();
             $table->timestamps();

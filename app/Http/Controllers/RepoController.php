@@ -212,17 +212,41 @@ class RepoController extends Controller
                     Storage::put('public/repos/clones/' . $repoName . '/.gitignore', '');
                 }
 
-                return redirect(route('repo.show', [Auth::user()->name, $repoName]));
+                return redirect(route('repo.show', [$user->name, $repoName]));
 
                 break;
 
 
             case 'import':
-                if (!Git::cloneRemote($name)) {
+
+                $repo = Repository::create([
+                    'user_id' => $user->id,
+                    'name' => $repoName,
+                    'description' => $request['repoDesc'],
+                ]);
+                User::findOrFail($user->id)->repos()->save($repo);
+
+
+                $absolutePath = storage_path() . '\app\public\repos\remotes\\' . $repoName . '.git\\';
+                $data = [
+                    'title' => $repoName,
+                    'absolutePath' => $absolutePath,
+                ];
+
+                if (!Git::initBare($repoName)) {
+                    return 'ERROR: git init bare error';
+                }
+
+                return view('repos.create_import', compact('data'));
+                break;
+
+            case 'importend':
+
+                if (!Git::cloneRemote($repoName)) {
                     return 'ERROR: git clone error';
                 }
 
-                return redirect(route('repo.show', [Auth::user()->name, $name]));
+                return redirect(route('repo.show', [$user->name, $repoName]));
                 break;
         }
     }
