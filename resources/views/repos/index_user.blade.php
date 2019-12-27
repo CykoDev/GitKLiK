@@ -3,8 +3,8 @@
 @section('content')
 
 @include('users.partials.header', [
-        'title' => __('User Repositories'),
-        
+        'title' => __('My Repositories'),
+        'description' => __('A collection of my repositories'),
         'class' => 'col-lg-7'
     ])
 
@@ -21,8 +21,7 @@ use App\User;
 
 <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
 
-
-<div class="header pb-5 pt-5 pt-md-5">
+<div class="header  pb-5 pt-5 pt-md-5">
     <div class="container-fluid">
         <div class="header-body">
             <h1>Explore Repositories</h1>
@@ -34,11 +33,6 @@ use App\User;
             </ul>
         </div>
     </div>
-    </div>
-</div>
-</div>
-</div>
 </div>
 
-@include('layouts.footers.auth')
 @endsection

@@ -1,4 +1,4 @@
-<footer style="padding:0" class="py-5">
+<footer class="py-5">
     <div class="container">
         @include('layouts.footers.nav')
     </div>

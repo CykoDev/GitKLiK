@@ -1,7 +1,5 @@
 <template>
 
-<link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
-
     <div>
 
         <div :class="['form-group', errors.name ? ' has-danger' : '' ]">
@@ -126,7 +124,7 @@
         </div> -->
 
         <div class="text-center">
-            <button type="submit" class="btn btn-grey mt-4" :disabled='submitDisable'>Create account</button>
+            <button type="submit" class="btn btn-primary mt-4" :disabled='submitDisable'>Create account</button>
         </div>
 
     </div>

@@ -4,7 +4,6 @@
     @include('layouts.headers.guest')
 
     <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">

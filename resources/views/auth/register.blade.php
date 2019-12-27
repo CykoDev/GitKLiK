@@ -7,8 +7,7 @@
     @include('layouts.headers.guest')
 
     <link href="{{ asset('css/registerCss.css') }}" rel="stylesheet">
-     <link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
-    
+
 
         <div class="container mt--8 pb-5">
         <!-- Table -->

@@ -16,12 +16,10 @@ use App\User;
 
 <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
 <link href="{{ asset('css/tablerows.css') }}" rel="stylesheet">
-
 <div class="container-fluid mt--7">
 <div class="row">
 <div class="cardContainer col-xl-12 order-xl-1">
-<div class=" card bg-secondary shadow">                  
-
+<div class=" card bg-secondary shadow">
                    
 <div class="header pb-5 pt-5 pt-md-5">
     <div class="container-fluid">
@@ -39,7 +37,6 @@ use App\User;
 </div>
 </div>
 </div>
-
 </div>
-@include('layouts.footers.auth')
+
 @endsection
