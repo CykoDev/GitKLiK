@@ -8,10 +8,13 @@
 
 Auth::routes(['verify' => true]);
 
+Route::get('/auth/redirect/{provider}', 'Auth\AuthController@redirect');
+Route::get('/callback/{provider}', 'Auth\AuthController@callback');
+
 Route::get('/', function () {
 
     return view('welcome');
-});
+})->name('welcome');
 
 
 /*

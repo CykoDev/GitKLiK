@@ -2,8 +2,9 @@
 
 @section('content')
     @include('layouts.headers.guest')
-    
+
     <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/buttons.css') }}" rel="stylesheet">
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
@@ -12,11 +13,11 @@
                     <div class="card-header bg-transparent pb-5">
                         <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
                         <div class="btn-wrapper text-center">
-                            <a href="#" class="btn btn-neutral btn-icon">
+                            <a href="{{ url('/auth/redirect/github') }}" class="btn btn-neutral btn-icon">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
                                 <span class="btn-inner--text">{{ __('Github') }}</span>
                             </a>
-                            <a href="#" class="btn btn-neutral btn-icon">
+                            <a href="{{ url('/auth/redirect/google') }}" class="btn btn-neutral btn-icon">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/google.svg"></span>
                                 <span class="btn-inner--text">{{ __('Google') }}</span>
                             </a>
@@ -27,12 +28,12 @@
                             <small>
                                 <a href="{{ route('register') }}">{{ __('Create new account') }}</a> {{ __('OR Sign in with these credentials:') }}
                             </small>
-                            <br>
                             <small>
-                                {{ __('Username') }} <strong>admin@argon.com</strong>
-                                {{ __('Password') }} <strong>secret</strong>
+                                {{ __('Username') }} <strong>supahot@a.aa</strong><br>
+                                {{ __('Password') }} <strong>aaaaaaaa</strong>
                             </small>
                         </div>
+                        <br><br>
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 

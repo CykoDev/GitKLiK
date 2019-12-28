@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call([RepoTagTableSeeder::class]);
         $this->call([PermissionTableSeeder::class]);
         $this->call([CreateAdminUserSeeder::class]);
+        $this->call([ForeignKeySeeder::class]);
     }
 }
