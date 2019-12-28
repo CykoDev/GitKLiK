@@ -13,7 +13,7 @@
                     <div class="card-header bg-transparent pb-5">
                         <div class="text-muted text-center mt-2 mb-3"><small>Sign in with</small></div>
                         <div class="btn-wrapper text-center">
-                            <a href="#" class="btn btn-neutral btn-icon">
+                            <a href="{{ url('/auth/redirect/github') }}" class="btn btn-neutral btn-icon">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
                                 <span class="btn-inner--text">{{ __('Github') }}</span>
                             </a>
