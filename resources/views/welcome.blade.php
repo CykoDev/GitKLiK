@@ -1,7 +1,7 @@
 @extends('layouts.app', ['class' => 'bg-default'])
 <link href="{{ asset('css/dashboardCss.css') }}" rel="stylesheet">
 @section('content')
-    <div class="header orangeGradient py-7 py-lg-8">
+    <div style="height:100vh" class="header orangeGradient py-8 py-lg-8">
         <div class="container">
             <div class="header-body text-center mt-7 mb-7">
                 <div class="row justify-content-center">
@@ -17,7 +17,9 @@
                 <polygon style="fill:#FF5206" class="fill-default" points="2560 0 2560 100 0 100"></polygon>
             </svg>
         </div>
+        
+         @include('layouts.footers.guest')
     </div>
 
-    <div class="container mt--10 pb-5"></div>
+    
 @endsection
