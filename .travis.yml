@@ -1,5 +1,5 @@
 os:
-  - windows
+  - linux
 
 language: php
 
