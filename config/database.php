@@ -102,7 +102,6 @@ return [
             'prefix' => '',
             'strict' => false,
         ],
-],
 
     ],
 
