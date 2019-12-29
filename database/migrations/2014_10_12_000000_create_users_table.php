@@ -15,6 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
+            $table->string('provider')->nullable();
+            $table->string('provider_id')->nullable();
             $table->string('name')->unique();
             $table->string('full_name')->nullable();
             $table->string('email')->unique();
@@ -22,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->string('headline', 500)->nullable();
             $table->text('bio')->nullable();
             $table->string('password');
-            $table->string('avatar')->default('DEFAULT_user.jpg');
             $table->string('cover')->default('DEFAULT_cover.jpg');
             $table->rememberToken();
             $table->softDeletes();

@@ -13,12 +13,14 @@ class CreateStarsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('stars', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned()->index();
-            $table->integer('user_id')->unsigned()->index();
-            $table->integer('repository_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('repository_id');
             $table->timestamps();
         });
+
     }
 
     /**

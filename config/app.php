@@ -167,6 +167,7 @@ return [
          */
         Spatie\Permission\PermissionServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
          * Collective Service Providers...
@@ -234,7 +235,8 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
         'Form'         => Collective\Html\FormFacade::class,
         'Html'         => Collective\Html\HtmlFacade::class,
-        'Image'        => Intervention\Image\Facades\Image::class
+        'Image'        => Intervention\Image\Facades\Image::class,
+        'Socialite'    => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];

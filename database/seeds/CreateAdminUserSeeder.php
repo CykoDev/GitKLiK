@@ -2,8 +2,10 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Photo;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
 
 class CreateAdminUserSeeder extends Seeder
 {
@@ -23,7 +25,11 @@ class CreateAdminUserSeeder extends Seeder
             'headline'  => 'The headline of a supahot admin bebe',
             'bio'       => 'Hella noice bio of a supahotadmin',
             'password'  => 'aaaaaaaa',
-    	]);
+        ]);
+        $user->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
         $role = Role::create(['name' => 'Admin']);
 

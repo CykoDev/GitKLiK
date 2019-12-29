@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
 use App\User;
+use App\Photo;
 
 class UserTableSeeder extends Seeder
 {
@@ -23,7 +24,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random1 guy',
             'bio'       => 'Hella noice bio of a sad random1 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy2',
@@ -32,7 +36,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random2 guy',
             'bio'       => 'Hella noice bio of a sad random2 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy3',
@@ -41,7 +48,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random3 guy',
             'bio'       => 'Hella noice bio of a sad random3 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy4',
@@ -50,7 +60,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random4 guy',
             'bio'       => 'Hella noice bio of a sad random4 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy5',
@@ -59,7 +72,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random5 guy',
             'bio'       => 'Hella noice bio of a sad random5 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy6',
@@ -68,7 +84,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random6 guy',
             'bio'       => 'Hella noice bio of a sad random6 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy7',
@@ -77,7 +96,10 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random7 guy',
             'bio'       => 'Hella noice bio of a sad random7 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
 
     	User::create([
             'name'      => 'randomguy8',
@@ -86,6 +108,15 @@ class UserTableSeeder extends Seeder
             'headline'  => 'The headline of a sad random8 guy',
             'bio'       => 'Hella noice bio of a sad random8 guy',
             'password'  => 'aaaaaaaa',
-    	]);
+    	])->photos()->save(Photo::create([
+            'path' => 'defaultUser.png',
+            'type' => 'profilePhoto',
+        ]));
+
+
+
+
+
+
     }
 }
