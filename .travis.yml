@@ -19,6 +19,7 @@ before_script:
   # - mysql -e 'create database homestead_test;'
   # - php artisan key:generate
   # - php artisan migrate
+  - composer dump-autoload --no-scripts
 
 script:
   - vendor/bin/phpunit --coverage-text
