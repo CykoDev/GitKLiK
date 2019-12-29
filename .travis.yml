@@ -16,9 +16,9 @@ before_script:
   - npm install npm@latest -g
   - npm install -g jshint
   - npm install
-  - mysql -e 'create database homestead_test;'
-  - php artisan key:generate
-  - php artisan migrate
+  # - mysql -e 'create database homestead_test;'
+  # - php artisan key:generate
+  # - php artisan migrate
 
 script:
   - vendor/bin/phpunit --coverage-text
